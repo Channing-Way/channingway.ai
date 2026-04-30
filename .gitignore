@@ -169,3 +169,9 @@ TODO.local.md
 NOTES.local.md
 .local/
 local/
+
+# === wrangler files ===
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
