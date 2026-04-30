@@ -1,0 +1,7 @@
+# Channing Way
+# Multi-agent optimization research. Public surface; crawl welcome.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://channingway.ai/sitemap.xml
