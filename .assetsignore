@@ -1,0 +1,10 @@
+# Files excluded from the static-assets upload to Cloudflare Workers
+# (these stay in the repo but shouldn't be served as public static files)
+
+wrangler.jsonc
+.assetsignore
+.gitignore
+.git
+.github
+.deploy-trigger
+README.md
