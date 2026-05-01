@@ -1,5 +1,5 @@
 # channingway.ai
 
-Landing page served via GitHub Pages at [channingway.ai](https://channingway.ai).
+Static landing page for [channingway.ai](https://channingway.ai).
 
-Static HTML, no build step. Edit `index.html` and push to `main` to deploy.
+Deployed via Cloudflare Workers Static Assets from `main`. Edit `index.html` and open a reviewed PR to update the site.
