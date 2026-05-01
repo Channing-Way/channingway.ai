@@ -1,6 +1,6 @@
 # channingway.ai
 
-Static landing page for [channingway.ai](https://channingway.ai). Channing Way is a boutique AI systems practice based in Berkeley, focused on multi-agent optimization research, applied systems work, and the interface between technical execution and aesthetic judgment.
+Static landing page for [channingway.ai](https://channingway.ai). Channing Way is a specialized AI systems practice based in Berkeley, focused on frontier-model orchestration for high-variance work.
 
 This repository contains the public website source, not the product or operational substrate. The working architecture, private staging surfaces, dispatches, client context, and internal memory remain outside this repo.
 
