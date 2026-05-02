@@ -3,6 +3,21 @@
 -
 -
 
+## Naming convention
+
+- PR title uses Conventional Commits: `<type>: <imperative summary>` or `<type>(scope): <imperative summary>`.
+- Branch name matches the PR title intent: `<type>/<kebab-case-summary>`.
+- Commit subject matches the PR title unless the PR intentionally contains multiple commits.
+- PR body summary matches the actual diff. No stale template text.
+
+Type:
+- [ ] feat
+- [ ] fix
+- [ ] docs
+- [ ] style
+- [ ] chore
+- [ ] other:
+
 ## Surface
 
 - [ ] public website copy / layout
