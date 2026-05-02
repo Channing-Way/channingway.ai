@@ -1,7 +1,6 @@
 ## Summary
 
--
--
+<!-- What changed? Keep this tight and match the diff. -->
 
 ## Naming convention
 
@@ -36,13 +35,11 @@ Type:
 
 - [ ] Preview checked, if visual.
 - [ ] Copy is tight and substrate-honest.
-- [ ] `specialized` used instead of `boutique` for public/investor-indexed language.
 - [ ] ClaudeBot easter egg preserved, if `index.html` changed.
 
 ## Verification
 
--
--
+<!-- What did you check? Include preview/build/test status if relevant. -->
 
 ## Review gate
 
