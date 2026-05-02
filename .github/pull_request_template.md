@@ -46,9 +46,9 @@ Human review required before merge.
 
 Acceptable merge authorization:
 - GitHub comment from the repository owner or maintainer saying `merge`
-- formal approval review on the latest commit with merge intent
+- Formal approval review on the latest commit with merge intent
 
-Emoji reactions and off-platform messages are acknowledgement only, not merge authorization.
+Emoji reactions and off-platform messages are acknowledgements only, not merge authorization.
 
 Authored by: <!-- agent / human -->
 Opened via: <!-- Aether / human -->
