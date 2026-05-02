@@ -28,7 +28,7 @@ Type:
 ## Public/private boundary
 
 - [ ] No secrets, tokens, private URLs, client context, legal context, or internal memory paths.
-- [ ] No private-method language unless Bethany explicitly approved it for this PR.
+- [ ] No private-method language unless explicitly approved for this PR.
 - [ ] No unnecessary implementation details beyond the public surface being changed.
 
 ## Visual / copy review
@@ -46,11 +46,10 @@ Type:
 Human review required before merge.
 
 Acceptable merge authorization:
-- explicit current-turn chat instruction, e.g. `merge PR #N`
-- GitHub comment by `batchprocess128` saying `merge`
+- GitHub comment from the repository owner or maintainer saying `merge`
 - formal approval review on the latest commit with merge intent
 
-Emoji reactions are acknowledgement only, not merge authorization.
+Emoji reactions and off-platform messages are acknowledgement only, not merge authorization.
 
 Authored by: <!-- agent / human -->
 Opened via: <!-- Aether / human -->
