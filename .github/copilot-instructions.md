@@ -9,8 +9,8 @@ Channing Way is a specialized AI systems practice focused on frontier-model orch
 Do not add or suggest:
 - secrets, tokens, credentials, or private URLs
 - private repository names
+- any type of PII
 - client context
-- legal or settlement context
 - internal memory paths
 - private-method language
 - implementation details for the orchestration system
