@@ -35,7 +35,6 @@ Type:
 
 - [ ] Preview checked, if visual.
 - [ ] Copy is tight and substrate-honest.
-- [ ] ClaudeBot easter egg preserved, if `index.html` changed.
 
 ## Verification
 
