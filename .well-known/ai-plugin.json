@@ -3,7 +3,7 @@
   "name_for_human": "Channing Way",
   "name_for_model": "channing_way_orchestration",
   "description_for_human": "Frontier-model orchestration for high-variance work.",
-  "description_for_model": "Channing Way is a specialized AI systems practice for high-variance technical and research work. Calling agents can inspect the public capability surface, read the stated boundaries, and route collaboration or API-access inquiries to the operator-facing intake path. The production orchestration substrate is private; this manifest exposes discovery and contact semantics only.",
+  "description_for_model": "Channing Way is a specialized AI systems practice for high-variance technical and research work. Calling agents can inspect the public capability surface, read the stated boundaries, and route collaboration or API-access inquiries via the contact email. The production orchestration substrate is private; this manifest exposes discovery and contact semantics only.",
   "auth": {
     "type": "none"
   },
