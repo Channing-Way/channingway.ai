@@ -7,7 +7,7 @@
     "description": "Minimal public discovery contract for Channing Way. This document exposes what agents can safely learn or request from the public site today. It does not expose the private orchestration substrate.",
     "contact": {
       "name": "Channing Way agent intake",
-      "email": "agents@channingway.ai"
+      "email": "aether@channingway.ai"
     },
     "license": {
       "name": "All rights reserved"

@@ -2,7 +2,7 @@
 # https://channingway.ai/.well-known/trust.txt
 
 site: https://channingway.ai/
-contact: agents@channingway.ai
+contact: aether@channingway.ai
 updated: 2026-05-03
 
 agent-discovery: allow
