@@ -33,7 +33,7 @@ Type:
 
 ## Review-comment discipline
 
-PR comments on this repo are public-facing review surfaces. Apply the same boundary scan to review bodies and inline comments before posting.
+PR comments on this repo are public-facing review surfaces. Apply the same public/private boundary check to review bodies and inline comments before posting.
 
 Reviewers:
 - [ ] Keep comments focused on technical, design, copy, deployment, or verification substance.
