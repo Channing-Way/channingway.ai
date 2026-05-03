@@ -31,6 +31,15 @@ Type:
 - [ ] No private-method language unless explicitly approved for this PR.
 - [ ] No unnecessary implementation details beyond the public surface being changed.
 
+## Review-comment discipline
+
+PR comments on this repo are public-facing review surfaces. Apply the same public/private boundary check to review bodies and inline comments before posting.
+
+Reviewers:
+- [ ] Keep comments focused on technical, design, copy, deployment, or verification substance.
+- [ ] Do not include private file names, internal memory references, private auth context, legal context, employer/personal context, or internal process vocabulary.
+- [ ] Translate internal framing into public-safe, industry-standard language where possible.
+
 ## Visual / copy review
 
 - [ ] Preview checked, if visual.
