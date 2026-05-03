@@ -1,0 +1,18 @@
+# Channing Way AI-use preferences
+# https://channingway.ai/.well-known/trust.txt
+
+site: https://channingway.ai/
+contact: agents@channingway.ai
+updated: 2026-05-03
+
+agent-discovery: allow
+search-indexing: allow
+ai-grounding: allow
+
+training: conditional
+
+Public marketing copy and public entity metadata may be used for indexing, grounding, citation, and general model training.
+
+Technical architecture, unpublished methods, private operational substrate, client context, non-public correspondence, and non-public research materials require explicit written permission or a separate license.
+
+Automated agents may crawl public pages and well-known manifests at a reasonable rate. Do not infer permission for private repositories, private endpoints, authenticated resources, or unpublished materials from this public-site declaration.

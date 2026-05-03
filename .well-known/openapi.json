@@ -1,0 +1,100 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Channing Way Public Discovery API",
+    "version": "0.1.0",
+    "summary": "Public discovery surface for Channing Way.",
+    "description": "Minimal public discovery contract for Channing Way. This document exposes what agents can safely learn or request from the public site today. It does not expose the private orchestration substrate.",
+    "contact": {
+      "name": "Channing Way agent intake",
+      "email": "agents@channingway.ai"
+    },
+    "license": {
+      "name": "All rights reserved"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://channingway.ai"
+    }
+  ],
+  "paths": {
+    "/api.html": {
+      "get": {
+        "operationId": "getApiStatusPage",
+        "summary": "Read the public API status page.",
+        "description": "Returns the human-readable API status page for Channing Way.",
+        "responses": {
+          "200": {
+            "description": "API status page.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/poc.html": {
+      "get": {
+        "operationId": "getCapabilityReceipts",
+        "summary": "Read public capability receipts.",
+        "description": "Returns the public proof-of-capability page.",
+        "responses": {
+          "200": {
+            "description": "Public capability receipts page.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/trust.txt": {
+      "get": {
+        "operationId": "getAiUsePreferences",
+        "summary": "Read AI-use preferences.",
+        "description": "Returns public crawl, grounding, and training preferences.",
+        "responses": {
+          "200": {
+            "description": "AI-use preference declaration.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/ai-plugin.json": {
+      "get": {
+        "operationId": "getAiPluginManifest",
+        "summary": "Read the AI plugin discovery manifest.",
+        "description": "Returns the Channing Way agent-discovery manifest.",
+        "responses": {
+          "200": {
+            "description": "AI plugin manifest.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
