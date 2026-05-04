@@ -53,7 +53,7 @@
     "schemas": {
       "OrganizationManifest": {
         "type": "object",
-        "description": "Schema.org Organization document with embedded JSON-LD context.",
+        "description": "Schema.org Organization document with embedded JSON-LD context. The authoritative content is shared with the Organization JSON-LD block embedded in /index.html and the served JSON-LD document at /api/manifest.json. This schema documents the structural shape for OpenAPI client generation; future revisions will introduce a single-source build step to eliminate hand-maintained drift.",
         "properties": {
           "@context": {
             "type": "string",
@@ -145,10 +145,12 @@
             ]
           },
           "service": {
-            "type": "string"
+            "type": "string",
+            "const": "channingway.ai"
           },
           "schema_version": {
-            "type": "string"
+            "type": "string",
+            "const": "1.0"
           }
         },
         "required": [
