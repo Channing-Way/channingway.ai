@@ -1,4 +1,6 @@
 {
+  "@context": "https://schema.org",
+  "@type": "Organization",
   "name": "Channing Way",
   "url": "https://channingway.ai",
   "tagline": "Frontier-model orchestration for high-variance work.",

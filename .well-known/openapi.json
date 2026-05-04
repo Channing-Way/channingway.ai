@@ -20,7 +20,118 @@
           "200": {
             "description": "Manifest object",
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "@context": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "@type": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "tagline": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "foundingDate": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "object",
+                      "properties": {
+                        "locality": {
+                          "type": "string"
+                        },
+                        "region": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "locality",
+                        "region",
+                        "country"
+                      ]
+                    },
+                    "founder": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "identifier": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "identifier"
+                      ]
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "github": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "linkedin": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "crunchbase": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "x": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      },
+                      "required": [
+                        "github",
+                        "linkedin",
+                        "crunchbase",
+                        "x"
+                      ]
+                    },
+                    "schema_version": {
+                      "type": "string"
+                    },
+                    "last_updated": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "@context",
+                    "@type",
+                    "name",
+                    "url",
+                    "tagline",
+                    "description",
+                    "foundingDate",
+                    "address",
+                    "founder",
+                    "links",
+                    "schema_version",
+                    "last_updated"
+                  ]
+                }
+              }
             }
           }
         }
@@ -34,7 +145,30 @@
           "200": {
             "description": "Status object",
             "content": {
-              "application/json": {}
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ok"
+                      ]
+                    },
+                    "service": {
+                      "type": "string"
+                    },
+                    "schema_version": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "service",
+                    "schema_version"
+                  ]
+                }
+              }
             }
           }
         }
