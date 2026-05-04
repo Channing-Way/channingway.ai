@@ -1,0 +1,19 @@
+# Channing Way
+
+> Frontier-model orchestration for high-variance work.
+
+Channing Way builds frontier-model orchestration for high-variance work. Specialized AI systems practice based in Berkeley.
+
+## Key pages
+
+- [/]: public landing page
+- [/api.html]: in progress
+- [/poc.html]: capability receipts
+
+## Links
+
+- [GitHub organization]: https://github.com/Channing-Way
+- [LinkedIn]: https://www.linkedin.com/company/channing-way/
+- [ORCID]: https://orcid.org/0009-0004-8302-8435
+- [Crunchbase]: https://www.crunchbase.com/organization/channing-way
+- [X]: https://x.com/channingway_x

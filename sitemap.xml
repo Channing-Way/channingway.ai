@@ -2,38 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://channingway.ai/</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-04</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://channingway.ai/poc.html</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://channingway.ai/api.html</loc>
+    <lastmod>2026-05-04</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://channingway.ai/api.html</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://channingway.ai/.well-known/ai-plugin.json</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://channingway.ai/.well-known/trust.txt</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://channingway.ai/.well-known/openapi.json</loc>
-    <lastmod>2026-05-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://channingway.ai/poc.html</loc>
+    <lastmod>2026-05-04</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>
