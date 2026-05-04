@@ -32,11 +32,11 @@
     },
     "/api/health.json": {
       "get": {
-        "summary": "Health check",
-        "description": "Returns a minimal status object.",
+        "summary": "Public status document",
+        "description": "Returns a minimal public status object. This endpoint does not indicate the health of any underlying orchestration or API services.",
         "responses": {
           "200": {
-            "description": "Status object",
+            "description": "Public status object",
             "content": {
               "application/json": {
                 "schema": {
