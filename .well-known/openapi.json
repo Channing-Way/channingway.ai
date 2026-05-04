@@ -24,11 +24,6 @@
                 "schema": {
                   "$ref": "#/components/schemas/OrganizationManifest"
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OrganizationManifest"
-                }
               }
             }
           }
@@ -126,12 +121,6 @@
               "type": "string",
               "format": "uri"
             }
-          },
-          "schema_version": {
-            "type": "string"
-          },
-          "last_updated": {
-            "type": "string"
           }
         },
         "required": [
@@ -143,9 +132,7 @@
           "foundingDate",
           "address",
           "founder",
-          "sameAs",
-          "schema_version",
-          "last_updated"
+          "sameAs"
         ]
       },
       "HealthStatus": {
