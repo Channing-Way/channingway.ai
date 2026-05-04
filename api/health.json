@@ -1,5 +1,6 @@
 {
-  "status": "ok",
   "service": "channingway.ai",
+  "asset": "static",
+  "note": "Not a live service health check.",
   "schema_version": "1.0"
 }
