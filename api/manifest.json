@@ -1,0 +1,24 @@
+{
+  "name": "Channing Way",
+  "url": "https://channingway.ai",
+  "tagline": "Frontier-model orchestration for high-variance work.",
+  "description": "Specialized AI systems practice based in Berkeley.",
+  "foundingDate": "2026",
+  "address": {
+    "locality": "Berkeley",
+    "region": "CA",
+    "country": "US"
+  },
+  "founder": {
+    "name": "Bethany Baker",
+    "identifier": "https://orcid.org/0009-0004-8302-8435"
+  },
+  "links": {
+    "github": "https://github.com/Channing-Way",
+    "linkedin": "https://www.linkedin.com/company/channing-way/",
+    "crunchbase": "https://www.crunchbase.com/organization/channing-way",
+    "x": "https://x.com/channingway_x"
+  },
+  "schema_version": "1.0",
+  "last_updated": "2026-05-04"
+}

@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Channing Way API",
-    "version": "0.1.0",
-    "description": "in progress"
+    "version": "0.2.0",
+    "description": "Read-only endpoints describing Channing Way's public state."
   },
   "servers": [
     {
@@ -11,5 +11,34 @@
       "description": "production"
     }
   ],
-  "paths": {}
+  "paths": {
+    "/api/manifest.json": {
+      "get": {
+        "summary": "Public manifest",
+        "description": "Returns Channing Way's public-facing identity manifest in JSON form.",
+        "responses": {
+          "200": {
+            "description": "Manifest object",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/health.json": {
+      "get": {
+        "summary": "Health check",
+        "description": "Returns a minimal status object.",
+        "responses": {
+          "200": {
+            "description": "Status object",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
 }
