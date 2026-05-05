@@ -14,7 +14,7 @@ Do not add or suggest:
 - internal memory paths
 - private-method language
 - implementation details for the orchestration system
-- references to legal matters or IP of any kind
+- references to legal matters or intellectual property of any kind
 - third-person personal references to the founder by first name
 
 Already-public professional identifiers may remain when they are intentionally part of the public entity graph.
