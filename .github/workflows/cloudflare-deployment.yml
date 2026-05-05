@@ -16,11 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract commit subject for deploy message
+      - name: Extract commit subject + author for deploy message
         id: msg
         run: |
           subject=$(git log -1 --pretty=%s)
+          author=$(git log -1 --pretty=%an)
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
+          echo "author=$author" >> "$GITHUB_OUTPUT"
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
@@ -28,7 +30,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: '4'
-          command: deploy --message "${{ steps.msg.outputs.subject }}"
+          command: deploy --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
 
       - name: Wait for edge propagation
         run: sleep 30
