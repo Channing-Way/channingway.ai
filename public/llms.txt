@@ -17,3 +17,4 @@ Channing Way builds frontier-model orchestration for high-variance work. Special
 - [ORCID]: https://orcid.org/0009-0004-8302-8435
 - [Crunchbase]: https://www.crunchbase.com/organization/channing-way
 - [X]: https://x.com/channingway_x
+- [Substack]: https://channingway.substack.com
