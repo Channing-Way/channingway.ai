@@ -44,7 +44,7 @@ Prefer removing copy over adding explanatory copy.
 ## Copy register
 
 - No em-dashes in visible copy. The em-dash is an AI-tell pattern actively being removed from public surfaces. Use periods, semicolons, colons, or parentheses instead.
-- No filler-prefix register-tics (e.g., word-prefixes used as filler rather than load-bearing).
+- No filler-prefix register-tics: avoid sentence-opening filler cues that do not add meaning. Examples to avoid: `Note:`, `Importantly,`, `In general,`.
 - Use canonical technical vocabulary, not paraphrased near-misses. Example: `continuum mechanics` (not `continuous mechanics`).
 - No "Established YYYY" or similar fixed-year establishment claims in visible page chrome. The Schema.org `foundingDate` covers this for crawlers; visible copy does not need to repeat it.
 
