@@ -9,7 +9,7 @@
 <!-- Open Graph -->
 <meta property="og:title" content="Channing Way | API">
 <meta property="og:description" content="API surface for frontier-model orchestration.">
-<meta property="og:url" content="https://channingway.ai/api.html">
+<meta property="og:url" content="https://channingway.ai/api">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Channing Way">
 <meta property="og:locale" content="en_US">
@@ -95,10 +95,17 @@
   <p class="muted">Frontier-model orchestration for high-variance work.</p>
 
   <dl>
-    <dt>Base URL</dt>
-    <dd><code>https://orchestration-api.channingway.ai/v1</code></dd>
     <dt>Status</dt>
-    <dd>Interface pending.</dd>
+    <dd>Phase 1: read-only discovery endpoints live. Full orchestration API in development.</dd>
+
+    <dt>Live endpoints</dt>
+    <dd>
+      <ul>
+        <li><code><a href="/api/manifest.json">/api/manifest.json</a></code>: Schema.org Organization (JSON-LD)</li>
+        <li><code><a href="/api/health.json">/api/health.json</a></code>: public status document</li>
+        <li><code><a href="/.well-known/openapi.json">/.well-known/openapi.json</a></code>: OpenAPI 3.1 specification</li>
+      </ul>
+    </dd>
   </dl>
 
   <p><a href="/">← home</a></p>
