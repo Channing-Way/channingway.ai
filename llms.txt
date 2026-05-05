@@ -7,7 +7,7 @@ Channing Way builds frontier-model orchestration for high-variance work. Special
 ## Key pages
 
 - [/]: public landing page
-- [/api]: phase 1 read-only
+- [/api.html]: phase 1 read-only
 - [/poc]: capability receipts
 
 ## Links
