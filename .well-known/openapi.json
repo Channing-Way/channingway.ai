@@ -2,8 +2,8 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Channing Way API",
-    "version": "0.1.0",
-    "description": "in progress"
+    "version": "0.3.0",
+    "description": "Read-only endpoints describing Channing Way's public state."
   },
   "servers": [
     {
@@ -11,5 +11,157 @@
       "description": "production"
     }
   ],
-  "paths": {}
+  "paths": {
+    "/api/manifest.json": {
+      "get": {
+        "summary": "Public manifest",
+        "description": "Returns Channing Way's public identity as a Schema.org Organization JSON-LD document.",
+        "responses": {
+          "200": {
+            "description": "Schema.org Organization JSON-LD document",
+            "content": {
+              "application/ld+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationManifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health.json": {
+      "get": {
+        "summary": "Public status document",
+        "description": "Returns a minimal public status object. This endpoint does not indicate the health of any underlying orchestration or API services.",
+        "responses": {
+          "200": {
+            "description": "Public status object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrganizationManifest": {
+        "type": "object",
+        "description": "Schema.org Organization document with embedded JSON-LD context. The authoritative content is shared with the Organization JSON-LD block embedded in /index.html and the served JSON-LD document at /api/manifest.json. This schema documents the structural shape for OpenAPI client generation; future revisions will introduce a single-source build step to eliminate hand-maintained drift.",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "format": "uri",
+            "const": "https://schema.org"
+          },
+          "@type": {
+            "type": "string",
+            "const": "Organization"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "description": {
+            "type": "string"
+          },
+          "foundingDate": {
+            "type": "string"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "@type": {
+                "type": "string",
+                "const": "PostalAddress"
+              },
+              "addressLocality": {
+                "type": "string"
+              },
+              "addressRegion": {
+                "type": "string"
+              },
+              "addressCountry": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "@type",
+              "addressLocality",
+              "addressRegion",
+              "addressCountry"
+            ]
+          },
+          "founder": {
+            "type": "object",
+            "description": "Reference to a Person entity by @id.",
+            "properties": {
+              "@id": {
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "required": [
+              "@id"
+            ]
+          },
+          "sameAs": {
+            "type": "array",
+            "description": "Canonical external URLs identifying the same Organization across surfaces.",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "required": [
+          "@context",
+          "@type",
+          "name",
+          "url",
+          "description",
+          "foundingDate",
+          "address",
+          "founder",
+          "sameAs"
+        ]
+      },
+      "HealthStatus": {
+        "type": "object",
+        "description": "Static public-status document. Not a live service health check; confirms only that the static asset is served.",
+        "properties": {
+          "service": {
+            "type": "string",
+            "const": "channingway.ai"
+          },
+          "asset": {
+            "type": "string",
+            "const": "static"
+          },
+          "note": {
+            "type": "string"
+          },
+          "schema_version": {
+            "type": "string",
+            "const": "1.0"
+          }
+        },
+        "required": [
+          "service",
+          "asset",
+          "note",
+          "schema_version"
+        ]
+      }
+    }
+  }
 }

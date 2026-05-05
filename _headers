@@ -1,0 +1,6 @@
+# Cloudflare Workers Static Assets headers
+# Override default Content-Type for JSON-LD documents so consumers
+# auto-detect linked-data semantics from the response header.
+
+/api/manifest.json
+  Content-Type: application/ld+json; charset=utf-8
