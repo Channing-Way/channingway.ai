@@ -137,16 +137,18 @@
       },
       "HealthStatus": {
         "type": "object",
+        "description": "Static public-status document. Not a live service health check; confirms only that the static asset is served.",
         "properties": {
-          "status": {
-            "type": "string",
-            "enum": [
-              "ok"
-            ]
-          },
           "service": {
             "type": "string",
             "const": "channingway.ai"
+          },
+          "asset": {
+            "type": "string",
+            "const": "static"
+          },
+          "note": {
+            "type": "string"
           },
           "schema_version": {
             "type": "string",
@@ -154,8 +156,9 @@
           }
         },
         "required": [
-          "status",
           "service",
+          "asset",
+          "note",
           "schema_version"
         ]
       }
