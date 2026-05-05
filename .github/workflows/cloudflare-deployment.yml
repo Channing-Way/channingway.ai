@@ -1,4 +1,4 @@
-name: Cloudflare deployment record
+name: Deploy
 
 on:
   push:
@@ -10,17 +10,27 @@ permissions:
   contents: read
 
 jobs:
-  record:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Cloudflare deploy
-        run: sleep 60
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
+
+      - name: Wait for edge propagation
+        run: sleep 30
 
       - name: Verify live site
         id: verify
         run: |
           set +e
-          status=$(curl -s -o /tmp/page.html -w "%{http_code}" https://channingway.ai/)
+          status=$(curl -s -o /tmp/page.html -w "%{http_code}" "https://channingway.ai/?nocache=$RANDOM")
           if [ "$status" = "200" ] && grep -q "Channing Way" /tmp/page.html; then
             echo "result=success" >> "$GITHUB_OUTPUT"
             echo "Verified: 200 + content present"
@@ -45,7 +55,7 @@ jobs:
               \"environment\": \"cloudflare-workers\",
               \"required_contexts\": [],
               \"auto_merge\": false,
-              \"description\": \"Cloudflare Workers Static Assets\"
+              \"description\": \"Cloudflare Workers Static Assets via wrangler-action\"
             }" | jq -r '.id')
 
           if [ -z "$deploy_id" ] || [ "$deploy_id" = "null" ]; then
