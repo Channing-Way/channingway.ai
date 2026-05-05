@@ -1,0 +1,64 @@
+name: Cloudflare deployment record
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  deployments: write
+  contents: read
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Cloudflare deploy
+        run: sleep 60
+
+      - name: Verify live site
+        id: verify
+        run: |
+          set +e
+          status=$(curl -s -o /tmp/page.html -w "%{http_code}" https://channingway.ai/)
+          if [ "$status" = "200" ] && grep -q "Channing Way" /tmp/page.html; then
+            echo "result=success" >> "$GITHUB_OUTPUT"
+            echo "Verified: 200 + content present"
+          else
+            echo "result=failure" >> "$GITHUB_OUTPUT"
+            echo "Verification failed: status=$status"
+          fi
+
+      - name: Create deployment record
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          STATE: ${{ steps.verify.outputs.result }}
+        run: |
+          deploy_id=$(curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/deployments" \
+            -d "{
+              \"ref\": \"$SHA\",
+              \"environment\": \"cloudflare-workers\",
+              \"required_contexts\": [],
+              \"auto_merge\": false,
+              \"description\": \"Cloudflare Workers Static Assets\"
+            }" | jq -r '.id')
+
+          if [ -z "$deploy_id" ] || [ "$deploy_id" = "null" ]; then
+            echo "Failed to create deployment record"
+            exit 1
+          fi
+
+          curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$REPO/deployments/$deploy_id/statuses" \
+            -d "{
+              \"state\": \"$STATE\",
+              \"environment_url\": \"https://channingway.ai/\",
+              \"description\": \"Verified: $STATE\"
+            }"
