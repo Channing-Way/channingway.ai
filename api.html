@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Channing Way | API</title>
+<title>API | Channing Way</title>
 <meta name="description" content="API surface for frontier-model orchestration.">
 
 <!-- Open Graph -->
-<meta property="og:title" content="Channing Way | API">
+<meta property="og:title" content="API | Channing Way">
 <meta property="og:description" content="API surface for frontier-model orchestration.">
 <meta property="og:url" content="https://channingway.ai/api">
 <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Channing Way | API">
+<meta name="twitter:title" content="API | Channing Way">
 <meta name="twitter:description" content="API surface for frontier-model orchestration.">
 <meta name="twitter:image" content="https://channingway.ai/apple-touch-icon.png">
 
@@ -25,83 +25,21 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/apple-touch-icon.png">
-<style>
-  :root {
-    color-scheme: light dark;
-    --fg: #111;
-    --muted: #555;
-    --bg: #fafafa;
-    --link: #0645ad;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --fg: #eee; --muted: #999; --bg: #111; --link: #8ab4f8; }
-  }
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-  main {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 6rem 1.5rem 4rem;
-  }
-  h1 {
-    font-size: 1.5rem;
-    margin: 0 0 2rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  p { margin: 0 0 1rem; }
-  .lede { font-size: 1rem; }
-  .muted { color: var(--muted); font-size: 0.875rem; }
-  dl {
-    margin: 2rem 0;
-  }
-  dt {
-    color: var(--muted);
-    font-size: 0.875rem;
-  }
-  dd {
-    margin: 0 0 1rem;
-  }
-  code {
-    font-family: inherit;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0 2rem;
-  }
-  li { margin: 0.5rem 0; }
-  a { color: var(--link); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-</style>
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <main>
-  <h1>Channing Way</h1>
+  <h1>API | Channing Way</h1>
 
-  <p class="lede">API</p>
-  <p class="muted">Frontier-model orchestration for high-variance work.</p>
+  <h2>Status</h2>
+  <p class="gray small">Phase 1 live: read-only discovery endpoints. Full orchestration API in progress.</p>
 
-  <dl>
-    <dt>Status</dt>
-    <dd>Phase 1 live: read-only discovery endpoints. Full orchestration API in progress.</dd>
-
-    <dt>Live endpoints</dt>
-    <dd>
-      <ul>
-        <li><code><a href="/api/manifest.json">/api/manifest.json</a></code>: Schema.org Organization (JSON-LD)</li>
-        <li><code><a href="/api/health.json">/api/health.json</a></code>: public status document</li>
-        <li><code><a href="/.well-known/openapi.json">/.well-known/openapi.json</a></code>: OpenAPI 3.1 specification</li>
-      </ul>
-    </dd>
-  </dl>
+  <h2>Live endpoints</h2>
+  <ul>
+    <li><code><a href="/api/manifest.json">/api/manifest.json</a></code><span class="gray small">: Schema.org Organization (JSON-LD)</span></li>
+    <li><code><a href="/api/health.json">/api/health.json</a></code><span class="gray small">: public status document</span></li>
+    <li><code><a href="/.well-known/openapi.json">/.well-known/openapi.json</a></code><span class="gray small">: OpenAPI 3.1 specification</span></li>
+  </ul>
 
   <p><a href="/">← home</a></p>
 </main>
