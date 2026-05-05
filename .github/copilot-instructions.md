@@ -24,7 +24,7 @@ Public copy may say:
 - frontier-model orchestration
 - high-variance work
 - API
-- POC
+- POC / capability receipts
 
 Do not explain how the private orchestration method works.
 
