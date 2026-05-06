@@ -4,7 +4,7 @@
   color-scheme: light dark;
   --fg: #111;
   --muted: #555;
-  --bg: #fafafa;
+  --bg: #f2efe9;
   --link: #0645ad;
 }
 
@@ -63,7 +63,7 @@ ul {
 
 li { margin: 0.5rem 0; }
 
-a { color: var(--link); text-decoration: none; }
+a { color: inherit; text-decoration: underline; }
 a:hover { text-decoration: underline; }
 
 /* code spans use site monospace */
