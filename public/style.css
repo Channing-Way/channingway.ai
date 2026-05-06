@@ -1,10 +1,42 @@
 /* channingway.ai — shared site styles */
 
+@font-face {
+  font-family: "Berkeley Mono";
+  src: url("/fonts/berkeley-mono/BerkeleyMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  src: url("/fonts/berkeley-mono/BerkeleyMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  src: url("/fonts/berkeley-mono/BerkeleyMono-Oblique.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Berkeley Mono";
+  src: url("/fonts/berkeley-mono/BerkeleyMono-Bold-Oblique.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light dark;
   --fg: #111;
   --muted: #555;
-  --bg: #f2efe9;
+  --bg: #ddd9d0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +52,7 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 16px;
   line-height: 1.6;
 }
@@ -32,16 +64,16 @@ main {
 }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   margin: 0 0 1rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 h2 {
   font-size: 1rem;
   margin: 1rem 0 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* first h2 on the page gets more breathing room from the intro */
@@ -55,7 +87,7 @@ p { margin: 0 0 1rem; }
 
 ul {
   list-style: none;
-  padding: 0;
+  padding: 0 0 0 1rem;
   margin: 1rem 0;
 }
 
