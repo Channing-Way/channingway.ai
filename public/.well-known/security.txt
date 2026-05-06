@@ -1,0 +1,5 @@
+Contact: mailto:bethany@channingway.ai
+Expires: 2027-05-06T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://channingway.ai/.well-known/security.txt
+Acknowledgments: https://channingway.ai/security/acknowledgments
