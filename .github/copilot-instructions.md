@@ -48,6 +48,8 @@ Prefer removing copy over adding explanatory copy.
 - Use canonical technical vocabulary, not paraphrased near-misses. Example: `continuum mechanics` (not `continuous mechanics`).
 - No "Established YYYY" or similar fixed-year establishment claims in visible page chrome. The Schema.org `foundingDate` covers this for crawlers; visible copy does not need to repeat it.
 
+**Note on automated enforcement.** Copilot's PR review only inspects code diffs (file changes). PR descriptions, issue/PR comments, review replies, commit messages, and the PR title itself are **not auto-enforced** by the review bot. Agents writing those surfaces must self-audit against this section before submitting; do not assume Copilot will catch register issues in non-code text. Treat this section as a contract that applies whether or not an automated reviewer flags it.
+
 ## Files
 
 Primary public files:
