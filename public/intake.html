@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intake · Channing Way</title>
+<meta name="description" content="Channing Way job intake. Two fields. We handle the rest.">
+
+<meta property="og:title" content="Intake · Channing Way">
+<meta property="og:description" content="Channing Way job intake. Two fields. We handle the rest.">
+<link rel="canonical" href="https://channingway.ai/intake">
+<meta property="og:url" content="https://channingway.ai/intake">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Channing Way">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://channingway.ai/apple-touch-icon.png">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Intake · Channing Way">
+<meta name="twitter:description" content="Channing Way job intake. Two fields. We handle the rest.">
+<meta name="twitter:image" content="https://channingway.ai/apple-touch-icon.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+<style>
+  form { margin: 2rem 0; }
+  label { display: block; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+  textarea, input[type="date"] {
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--fg);
+    border-radius: 0;
+    padding: 0.75rem;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  textarea { min-height: 12rem; resize: vertical; }
+  input[type="date"] { color-scheme: light dark; }
+  textarea:focus, input[type="date"]:focus {
+    outline: 2px solid var(--fg);
+    outline-offset: 2px;
+  }
+  .counter {
+    font-size: 0.875rem;
+    color: var(--muted);
+    text-align: right;
+    margin: 0.25rem 0 0;
+  }
+  .counter.warn { color: var(--fg); font-weight: 700; }
+  button {
+    background: var(--fg);
+    color: var(--bg);
+    border: 1px solid var(--fg);
+    padding: 0.75rem 1.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 1.5rem;
+  }
+  button:hover { background: var(--bg); color: var(--fg); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .status {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--muted);
+    color: var(--muted);
+    display: none;
+  }
+  .status.show { display: block; }
+  .status.ok { color: var(--fg); border-color: var(--fg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Intake</h1>
+
+  <p>Two fields. We handle the rest.</p>
+
+  <form id="intake-form" novalidate>
+    <label for="task">Task</label>
+    <textarea
+      id="task"
+      name="task"
+      maxlength="10000"
+      placeholder="Describe what you need. Type or dictate. Paste links if you have them. Free-form."
+      required></textarea>
+    <p class="counter"><span id="counter">0</span> / 10,000</p>
+
+    <label for="due_date">Due date</label>
+    <input type="date" id="due_date" name="due_date" required>
+
+    <button type="submit" id="submit-btn">Submit</button>
+
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </form>
+
+  <h2 class="gray small">After you submit</h2>
+  <p class="gray small">
+    Channing Way captures identity passively from your session. Within 24 hours
+    you receive any clarifying questions (≤ 3), then a locked spec with pricing
+    and acceptance criteria, then delivery. Payment runs through Stripe at spec
+    sign-off.
+  </p>
+
+  <p><a href="/">← home</a></p>
+</main>
+
+<script>
+(function () {
+  // Webhook URL — Discord webhook posted to by the form on submit.
+  // PLACEHOLDER until Vel provides; swap before deploy.
+  const WEBHOOK_URL = "%WEBHOOK_URL%";
+
+  const form = document.getElementById('intake-form');
+  const taskEl = document.getElementById('task');
+  const dueEl = document.getElementById('due_date');
+  const counter = document.getElementById('counter');
+  const status = document.getElementById('status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  // Live char counter; warn at 9000.
+  taskEl.addEventListener('input', () => {
+    const n = taskEl.value.length;
+    counter.textContent = n.toLocaleString('en-US');
+    counter.parentElement.classList.toggle('warn', n >= 9000);
+  });
+
+  function showStatus(msg, ok) {
+    status.textContent = msg;
+    status.className = 'status show' + (ok ? ' ok' : '');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!taskEl.value.trim()) { showStatus('Task is required.', false); return; }
+    if (!dueEl.value) { showStatus('Due date is required.', false); return; }
+    if (WEBHOOK_URL.indexOf('%') === 0) {
+      showStatus('Form not configured yet. Email bethany@channingway.ai directly.', false);
+      return;
+    }
+
+    submitBtn.disabled = true;
+    showStatus('Submitting...', false);
+
+    const submittedAt = new Date().toISOString();
+    const taskValue = taskEl.value.trim();
+    const dueValue = dueEl.value;
+
+    // Discord webhook payload — substantive intake summary as embed.
+    const payload = {
+      username: "Channing Way Intake",
+      embeds: [{
+        title: "New job intake",
+        color: 0x222222,
+        fields: [
+          {
+            name: "Task",
+            value: taskValue.length > 1024
+              ? taskValue.slice(0, 1020) + " ..."
+              : taskValue
+          },
+          { name: "Due date", value: dueValue, inline: true },
+          { name: "Submitted at", value: submittedAt, inline: true }
+        ],
+        footer: { text: "channingway.ai/intake" },
+        timestamp: submittedAt
+      }]
+    };
+
+    try {
+      const resp = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (resp.ok || resp.status === 204) {
+        showStatus(
+          "Submitted. Channing Way returns clarifying questions (≤ 3) within 24 hours, then a locked spec, then delivery.",
+          true
+        );
+        form.reset();
+        counter.textContent = '0';
+        counter.parentElement.classList.remove('warn');
+      } else {
+        showStatus('Submission failed (status ' + resp.status + '). Email bethany@channingway.ai directly.', false);
+        submitBtn.disabled = false;
+      }
+    } catch (err) {
+      showStatus('Network error. Try again, or email bethany@channingway.ai directly.', false);
+      submitBtn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
