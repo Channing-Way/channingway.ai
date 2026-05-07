@@ -101,10 +101,9 @@
 
   <h2 class="gray small">After you submit</h2>
   <p class="gray small">
-    Channing Way captures identity passively from your session. Within 24 hours
-    you receive any clarifying questions (≤ 3), then a locked spec with pricing
-    and acceptance criteria, then delivery. Payment runs through Stripe at spec
-    sign-off.
+    Within 24 hours you receive any clarifying questions (≤ 3), then a locked
+    spec with pricing and acceptance criteria, then delivery. Payment runs
+    through Stripe at spec sign-off.
   </p>
 
   <p><a href="/">← home</a></p>
@@ -112,11 +111,7 @@
 
 <script>
 (function () {
-  // Webhook URL — Discord webhook posted to by the form on submit.
-  // v0 dogfood: URL exposed client-side. Phase 2 replaces with Cloudflare
-  // Worker that keeps the URL server-side. If abused, regenerate webhook
-  // in Discord (Server Settings → Integrations → Webhooks → regenerate).
-  const WEBHOOK_URL = "https://discord.com/api/webhooks/1502009934835880058/R0O4Nhrecg2YarCIyFAkJfQ3tzqXP4zCmx_1cfipRj6UaGHuXTY3rQgLaI-s1KSO-7q-";
+  const SUBMIT_URL = '/api/intake/submit';
 
   const form = document.getElementById('intake-form');
   const taskEl = document.getElementById('task');
@@ -141,59 +136,31 @@
     e.preventDefault();
     if (!taskEl.value.trim()) { showStatus('Task is required.', false); return; }
     if (!dueEl.value) { showStatus('Due date is required.', false); return; }
-    if (WEBHOOK_URL.indexOf('%') === 0) {
-      showStatus('Form not configured yet. Email bethany@channingway.ai directly.', false);
-      return;
-    }
 
     submitBtn.disabled = true;
     showStatus('Submitting...', false);
 
-    const submittedAt = new Date().toISOString();
-    const taskValue = taskEl.value.trim();
-    const dueValue = dueEl.value;
-
-    // Discord webhook payload — substantive intake summary as embed.
-    // allowed_mentions disables @everyone / @here / role / user mentions
-    // as defense-in-depth against injection (even though embed values are
-    // substantively-protected at Discord's parser layer).
-    const payload = {
-      username: "Channing Way Intake",
-      allowed_mentions: { parse: [] },
-      embeds: [{
-        title: "New job intake",
-        color: 0x222222,
-        fields: [
-          {
-            name: "Task",
-            value: taskValue.length > 1024
-              ? taskValue.slice(0, 1020) + " ..."
-              : taskValue
-          },
-          { name: "Due date", value: dueValue, inline: true },
-          { name: "Submitted at", value: submittedAt, inline: true }
-        ],
-        footer: { text: "channingway.ai/intake" },
-        timestamp: submittedAt
-      }]
-    };
+    const task = taskEl.value.trim();
+    const due_date = dueEl.value;
 
     try {
-      const resp = await fetch(WEBHOOK_URL, {
+      const resp = await fetch(SUBMIT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ task, due_date })
       });
-      if (resp.ok || resp.status === 204) {
+      const data = await resp.json().catch(() => ({}));
+      if (resp.ok) {
         showStatus(
-          "Submitted. Channing Way returns clarifying questions (≤ 3) within 24 hours, then a locked spec, then delivery.",
+          'Submitted. Channing Way returns clarifying questions (≤ 3) within 24 hours, then a locked spec, then delivery.',
           true
         );
         form.reset();
         counter.textContent = '0';
         counter.parentElement.classList.remove('warn');
+        submitBtn.disabled = false;
       } else {
-        showStatus('Submission failed (status ' + resp.status + '). Email bethany@channingway.ai directly.', false);
+        showStatus(data.error || 'Submission failed (status ' + resp.status + '). Email bethany@channingway.ai directly.', false);
         submitBtn.disabled = false;
       }
     } catch (err) {
