@@ -141,7 +141,7 @@
     e.preventDefault();
     if (!taskEl.value.trim()) { showStatus('Task is required.', false); return; }
     if (!dueEl.value) { showStatus('Due date is required.', false); return; }
-    if (WEBHOOK_URL.indexOf('%') === 0) {
+    if (WEBHOOK_URL.startsWith('%')) {
       showStatus('Form not configured yet. Email bethany@channingway.ai directly.', false);
       return;
     }
