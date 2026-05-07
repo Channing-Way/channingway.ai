@@ -11,7 +11,13 @@ const ALLOWED_ORIGINS = ['https://channingway.ai', 'https://www.channingway.ai']
 const INTAKE_ROUTE = '/api/intake/submit';
 const TASK_MAX = 10000;
 const EMBED_VALUE_MAX = 1024;
-const DUE_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const URGENCY_VALUES = ['1d', '1w', '1mo', 'flex'];
+const URGENCY_LABELS = {
+  '1d': 'Within 1 day',
+  '1w': 'Within 1 week',
+  '1mo': 'Within 1 month',
+  'flex': 'Flexible / no rush'
+};
 
 export default {
   async fetch(request, env) {
@@ -50,16 +56,13 @@ async function handleIntake(request, env) {
   }
 
   const task = String(body.task || '').trim();
-  const dueDate = String(body.due_date || '').trim();
+  const due = String(body.due || '').trim();
 
   if (!task) {
     return json({ error: 'Task is required.' }, 400);
   }
-  if (!dueDate) {
-    return json({ error: 'Due date is required.' }, 400);
-  }
-  if (!DUE_DATE_RE.test(dueDate)) {
-    return json({ error: 'Due date must be in YYYY-MM-DD format.' }, 400);
+  if (!URGENCY_VALUES.includes(due)) {
+    return json({ error: 'Invalid urgency value.' }, 400);
   }
   if (task.length > TASK_MAX) {
     return json({ error: 'Task exceeds maximum length.' }, 400);
@@ -82,7 +85,7 @@ async function handleIntake(request, env) {
       color: 0x222222,
       fields: [
         { name: 'Task', value: taskValue },
-        { name: 'Due date', value: dueDate, inline: true },
+        { name: 'Urgency', value: URGENCY_LABELS[due], inline: true },
         { name: 'Submitted at', value: submittedAt, inline: true }
       ],
       footer: { text: 'channingway.ai/intake' },
