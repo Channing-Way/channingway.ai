@@ -154,8 +154,12 @@
     const dueValue = dueEl.value;
 
     // Discord webhook payload — substantive intake summary as embed.
+    // allowed_mentions disables @everyone / @here / role / user mentions
+    // as defense-in-depth against injection (even though embed values are
+    // substantively-protected at Discord's parser layer).
     const payload = {
       username: "Channing Way Intake",
+      allowed_mentions: { parse: [] },
       embeds: [{
         title: "New job intake",
         color: 0x222222,
