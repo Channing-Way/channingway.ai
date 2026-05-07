@@ -141,13 +141,13 @@
     showStatus('Submitting...', false);
 
     const task = taskEl.value.trim();
-    const due_date = dueEl.value;
+    const dueDate = dueEl.value;
 
     try {
       const resp = await fetch(SUBMIT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ task, due_date })
+        body: JSON.stringify({ task, due_date: dueDate })
       });
       const data = await resp.json().catch(() => ({}));
       if (resp.ok) {

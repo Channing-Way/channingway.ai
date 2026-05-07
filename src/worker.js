@@ -49,12 +49,12 @@ async function handleIntake(request, env) {
   }
 
   const task = String(body.task || '').trim();
-  const due_date = String(body.due_date || '').trim();
+  const dueDate = String(body.due_date || '').trim();
 
   if (!task) {
     return json({ error: 'Task is required.' }, 400);
   }
-  if (!due_date) {
+  if (!dueDate) {
     return json({ error: 'Due date is required.' }, 400);
   }
   if (task.length > TASK_MAX) {
@@ -78,7 +78,7 @@ async function handleIntake(request, env) {
       color: 0x222222,
       fields: [
         { name: 'Task', value: taskValue },
-        { name: 'Due date', value: due_date, inline: true },
+        { name: 'Due date', value: dueDate, inline: true },
         { name: 'Submitted at', value: submittedAt, inline: true }
       ],
       footer: { text: 'channingway.ai/intake' },
