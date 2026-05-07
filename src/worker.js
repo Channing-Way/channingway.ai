@@ -11,6 +11,7 @@ const ALLOWED_ORIGINS = ['https://channingway.ai', 'https://www.channingway.ai']
 const INTAKE_ROUTE = '/api/intake/submit';
 const TASK_MAX = 10000;
 const EMBED_VALUE_MAX = 1024;
+const DUE_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 export default {
   async fetch(request, env) {
@@ -56,6 +57,9 @@ async function handleIntake(request, env) {
   }
   if (!dueDate) {
     return json({ error: 'Due date is required.' }, 400);
+  }
+  if (!DUE_DATE_RE.test(dueDate)) {
+    return json({ error: 'Due date must be in YYYY-MM-DD format.' }, 400);
   }
   if (task.length > TASK_MAX) {
     return json({ error: 'Task exceeds maximum length.' }, 400);
