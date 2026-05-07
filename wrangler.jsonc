@@ -2,10 +2,12 @@
   "$schema": "https://json.schemastore.org/wrangler.json",
   "name": "channingway-ai",
   "compatibility_date": "2026-04-30",
+  "main": "src/worker.js",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS"
   }
 }
