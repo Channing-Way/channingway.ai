@@ -4,22 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intake · Channing Way</title>
-<meta name="description" content="Channing Way job intake. Two fields. We handle the rest.">
-
+<meta name="description" content="Channing Way job intake.">
 <meta property="og:title" content="Intake · Channing Way">
-<meta property="og:description" content="Channing Way job intake. Two fields. We handle the rest.">
+<meta property="og:description" content="Channing Way job intake.">
 <link rel="canonical" href="https://channingway.ai/intake">
 <meta property="og:url" content="https://channingway.ai/intake">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Channing Way">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://channingway.ai/apple-touch-icon.png">
-
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Intake · Channing Way">
-<meta name="twitter:description" content="Channing Way job intake. Two fields. We handle the rest.">
+<meta name="twitter:description" content="Channing Way job intake.">
 <meta name="twitter:image" content="https://channingway.ai/apple-touch-icon.png">
-
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/style.css">
@@ -79,8 +76,6 @@
 <main>
   <h1>Intake</h1>
 
-  <p>Two fields. We handle the rest.</p>
-
   <form id="intake-form" novalidate>
     <label for="task">Task</label>
     <textarea
@@ -105,11 +100,9 @@
     <div class="status" id="status" role="status" aria-live="polite"></div>
   </form>
 
-  <h2 class="gray small">After you submit</h2>
+  <h2 class="gray small">What happens next</h2>
   <p class="gray small">
-    Within 24 hours you receive any clarifying questions (≤ 3), then a locked
-    spec with pricing and acceptance criteria, then delivery. Payment runs
-    through Stripe at spec sign-off.
+    You’ll get ≤ 3 clarifying questions within 24 hours, then a locked spec.
   </p>
 
   <p><a href="/">← home</a></p>
@@ -126,7 +119,6 @@
   const status = document.getElementById('status');
   const submitBtn = document.getElementById('submit-btn');
 
-  // Live char counter; warn at 9000.
   taskEl.addEventListener('input', () => {
     const n = taskEl.value.length;
     counter.textContent = n.toLocaleString('en-US');
@@ -158,7 +150,7 @@
       const data = await resp.json().catch(() => ({}));
       if (resp.ok) {
         showStatus(
-          'Submitted. Channing Way returns clarifying questions (≤ 3) within 24 hours, then a locked spec, then delivery.',
+          'Submitted. You’ll get ≤ 3 clarifying questions within 24 hours, then a locked spec.',
           true
         );
         form.reset();
