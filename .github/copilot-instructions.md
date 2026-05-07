@@ -44,7 +44,7 @@ Prefer removing copy over adding explanatory copy.
 ## Copy register
 
 - No em-dashes in visible copy. The em-dash is an AI-tell pattern actively being removed from public surfaces. Use periods, semicolons, colons, or parentheses instead.
-- No filler-prefix register-tics (e.g., word-prefixes used as filler rather than load-bearing).
+- No filler-prefix register-tics in public-facing text. Specifically forbidden: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`, and `substantively` when used as a filler adverb before another adjective ("substantively correct", "substantively shipping"). These read as register-overhead to outside observers, not load-bearing meaning. Plain English in public text. Applies to: page copy, PR descriptions, commit messages, PR/issue comments, review replies, public Substack posts, and any other public-facing artifact. Internal chat, private repos, and local memory files are exempt; this rule is specifically for surfaces that strangers can read.
 - Use canonical technical vocabulary, not paraphrased near-misses. Example: `continuum mechanics` (not `continuous mechanics`).
 - No "Established YYYY" or similar fixed-year establishment claims in visible page chrome. The Schema.org `foundingDate` covers this for crawlers; visible copy does not need to repeat it.
 
