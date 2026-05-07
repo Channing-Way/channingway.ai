@@ -56,12 +56,12 @@ async function handleIntake(request, env) {
   }
 
   const task = String(body.task || '').trim();
-  const due = String(body.due || '').trim();
+  const urgency = String(body.urgency || '').trim();
 
   if (!task) {
     return json({ error: 'Task is required.' }, 400);
   }
-  if (!URGENCY_VALUES.includes(due)) {
+  if (!URGENCY_VALUES.includes(urgency)) {
     return json({ error: 'Invalid urgency value.' }, 400);
   }
   if (task.length > TASK_MAX) {
@@ -85,7 +85,7 @@ async function handleIntake(request, env) {
       color: 0x222222,
       fields: [
         { name: 'Task', value: taskValue },
-        { name: 'Urgency', value: URGENCY_LABELS[due], inline: true },
+        { name: 'Urgency', value: URGENCY_LABELS[urgency], inline: true },
         { name: 'Submitted at', value: submittedAt, inline: true }
       ],
       footer: { text: 'channingway.ai/intake' },
@@ -104,7 +104,7 @@ async function handleIntake(request, env) {
     return json({ error: 'Network error. Try again or email bethany@channingway.ai.' }, 502);
   }
 
-  if (resp.ok || resp.status === 204) {
+  if (resp.ok) {
     return json({ ok: true }, 200);
   }
 
