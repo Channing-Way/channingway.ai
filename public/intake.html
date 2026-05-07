@@ -189,6 +189,7 @@
         form.reset();
         counter.textContent = '0';
         counter.parentElement.classList.remove('warn');
+        submitBtn.disabled = false;
       } else {
         showStatus('Submission failed (status ' + resp.status + '). Email bethany@channingway.ai directly.', false);
         submitBtn.disabled = false;
