@@ -1,17 +1,3 @@
-/**
- * Channing Way — Cloudflare Worker
- *
- * Routes:
- *   POST /api/intake/submit  — intake form handler; proxies to Discord webhook
- *                              stored as Wrangler secret DISCORD_WEBHOOK_URL.
- *   *                         — static assets via ASSETS binding.
- *
- * Optional secret: VEL_USER_ID — Discord user ID of the agent to ping when
- * a submission lands. If set, the webhook content includes `<@VEL_USER_ID>`
- * and allowed_mentions is tightened to that user only. If unset, no ping is
- * sent and all mentions are suppressed (original behavior).
- */
-
 const ALLOWED_ORIGINS = ['https://channingway.ai', 'https://www.channingway.ai'];
 const INTAKE_ROUTE = '/api/intake/submit';
 const TASK_MAX = 10000;
@@ -41,13 +27,11 @@ export default {
 };
 
 async function handleIntake(request, env) {
-  // Origin validation — reject cross-origin submissions.
   const origin = request.headers.get('Origin') || '';
   if (!ALLOWED_ORIGINS.includes(origin)) {
     return json({ error: 'Forbidden.' }, 403);
   }
 
-  // Content-Type guard.
   const ct = request.headers.get('Content-Type') || '';
   if (!ct.includes('application/json')) {
     return json({ error: 'Bad Request.' }, 400);
@@ -86,7 +70,9 @@ async function handleIntake(request, env) {
 
   const payload = {
     username: 'Channing Way Intake',
-    allowed_mentions: velUserId ? { users: [velUserId] } : { parse: [] },
+    allowed_mentions: velUserId
+      ? { parse: [], users: [velUserId] }
+      : { parse: [] },
     embeds: [{
       title: 'New job intake',
       color: 0x222222,
