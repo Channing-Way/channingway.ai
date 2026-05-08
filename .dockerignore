@@ -1,8 +1,4 @@
-.git
-.github
-.DS_Store
-node_modules
-*.log
-public/
-*.md
-LICENSE
+# The Dockerfile does not COPY anything from the build context.
+# Deny everything; allowlist only what the daemon needs.
+*
+!Dockerfile
