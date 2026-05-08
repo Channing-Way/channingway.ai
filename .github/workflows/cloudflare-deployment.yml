@@ -29,7 +29,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          wranglerVersion: '4'
+          wranglerVersion: '4.90.0'
           command: deploy --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
 
       - name: Wait for edge propagation
