@@ -51,17 +51,15 @@ jobs:
             if grep -nP --color=never "$pattern" "${existing[@]}" >/tmp/hits 2>/dev/null; then
               echo "::group::$rule violations"
               echo "Pattern: $pattern"
-              cat /tmp/hits | sed 's/^/  /'
+              sed 's/^/  /' /tmp/hits
               echo "::endgroup::"
-              while IFS= read -r line; do
-                # GitHub problem-matcher style annotation. Use awk so paths
-                # with colons (unlikely here, but cheap to handle) don't
-                # break the file:line:msg split.
-                file=$(printf '%s' "$line" | awk -F: '{print $1}')
-                lineno=$(printf '%s' "$line" | awk -F: '{print $2}')
-                msg=$(printf '%s' "$line" | awk -F: '{for (i=3; i<=NF; i++) printf "%s%s", $i, (i<NF?":":"")}')
+              # Use NUL-delimited filenames for annotations so colon-containing
+              # paths do not break parsing. GNU grep emits file<NUL>line:match.
+              while IFS= read -r -d '' file && IFS= read -r rest; do
+                lineno=${rest%%:*}
+                msg=${rest#*:}
                 echo "::error file=${file},line=${lineno}::${rule}: ${msg}"
-              done < /tmp/hits
+              done < <(grep -nHP -Z --color=never "$pattern" "${existing[@]}" 2>/dev/null)
               fail=1
             fi
           }
