@@ -19,7 +19,7 @@ jobs:
       - name: Extract commit subject + author for deploy message
         id: msg
         run: |
-          subject=$(git log -1 --pretty=%s)
+          subject=$(git log -1 --pretty=%s | tr -d '"')
           author=$(git log -1 --pretty=%an)
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
           echo "author=$author" >> "$GITHUB_OUTPUT"
