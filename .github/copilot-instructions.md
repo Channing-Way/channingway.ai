@@ -80,7 +80,7 @@ Partner relationships and stack composition are intentionally visible. Channing 
 - Discord: Vel deploys through Discord
 - Wispr Flow: voice-first capture
 
-Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
+Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. But the partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
 
 ---
 

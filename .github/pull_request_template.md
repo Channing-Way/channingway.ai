@@ -38,7 +38,7 @@ PR titles and descriptions are public surfaces. Before push, scan for and strip:
 
 - [ ] Internal forward-roadmap leak (references to follow-up PRs, sequence steps, retired-as-outlier language).
 - [ ] Internal architecture-naming such as path-class deliberation labels.
-- [ ] Aspirational partner lists in human-facing description (partner stack belongs in `.github/copilot-instructions.md`, not in PR descriptions).
+- [ ] Aspirational or unrelated partner lists in PR descriptions. Partners materially involved in the diff may be named substantively; the full partner stack roster lives in `.github/copilot-instructions.md`.
 - [ ] Money, pricing, dollar figures, fees, or rates.
 - [ ] Personal-history detail (substance use, somatic load, masking, recomposition narrative).
 - [ ] Forward-operational sequencing language ("we'll do X next", "after this lands").
