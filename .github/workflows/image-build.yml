@@ -6,6 +6,7 @@ on:
     paths:
       - 'Dockerfile'
       - '.github/workflows/image-build.yml'
+      - '.dockerignore'
   workflow_dispatch:
 
 permissions:
@@ -34,7 +35,7 @@ jobs:
 
       - name: Build cw-build image
         run: |
-          docker build \
+          docker build --pull \
             --build-arg MINIMUS_TENANT_ID="${{ secrets.MINIMUS_TENANT_ID }}" \
             -t ghcr.io/channing-way/cw-build:latest \
             -t "ghcr.io/channing-way/cw-build:${{ github.sha }}" \
@@ -42,5 +43,5 @@ jobs:
 
       - name: Push to GHCR
         run: |
-          docker push ghcr.io/channing-way/cw-build:latest
           docker push "ghcr.io/channing-way/cw-build:${{ github.sha }}"
+          docker push ghcr.io/channing-way/cw-build:latest
