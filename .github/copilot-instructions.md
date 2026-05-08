@@ -64,6 +64,45 @@ These rules apply to all public-facing text: page copy, PR descriptions, commit 
 
 ---
 
+## Partners and visible-stack composition
+
+Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
+
+**R-PARTNERS-1 — partner relationships are publicly visible and credited.** Partners that may be openly named in repo files, PR descriptions, deployment configs, and Substack:
+
+- Minimus: hardened-image substrate / MinimOS Node base
+- Cloudflare: Workers and WAF
+- Anthropic: claude as substrate, agent runtime, primary frontier model partner
+- xAI: frontier model provider, agent runtime
+- Nous Research: frontier model and Hermes agentic harness
+- OpenRouter: multi-model routing for cross-provider evaluation
+- Tailscale: secure mesh VPN, private network access across devices
+- Discord: Vel deploys through Discord
+- Wispr Flow: voice-first capture
+
+Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
+
+---
+
+## Versioning: always latest, never pin
+
+**R-VERSIONING-1 — component versions are not pinned in this repository.** Use:
+
+- `:latest` for container base images
+- `@latest` for npm packages installed at build time
+- `ubuntu-latest` for GitHub Actions runners
+- `@v<major>` for GitHub Actions (forward-drift within major)
+- `lts/*` for `.nvmrc` (forward-drifts across LTS majors)
+- Current frontier model versions, not stable-from-six-months-ago
+
+Reproducibility lives at the composed-image / SHA-tagged-artifact layer, not at the component-version layer. The `cw-build` container is tagged with the git SHA on every build; downstream workflows pull by SHA. Components inside the image forward-drift between rebuilds; the artifact-as-a-whole is reproducible by SHA tag.
+
+When reviewing, actively look for implicit version pinning anywhere in the repo (Dockerfile `FROM` tags, npm dependency pinning, action version pins beyond the major, OS image pins, model-version pins) and flag them so they can be moved back to leading-edge.
+
+Exception: GitHub Actions major-version refs (`@v4`, `@v3`) are acceptable forward-drift since major-version bumps signal breaking changes. Do not pin actions to specific commit SHAs unless there is a documented supply-chain reason.
+
+---
+
 ## Files
 
 Primary public files:
@@ -118,6 +157,8 @@ When making changes, verify the rules that apply to your diff:
 | HTML or sitemap URLs | R-URL-1, R-SCHEMA-1 |
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-6, R-STYLE-1 |
+| repo files naming partners or stack | R-PARTNERS-1 |
+| Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
 For visual changes, also inspect the rendered page or Cloudflare preview.
 

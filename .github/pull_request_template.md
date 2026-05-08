@@ -8,6 +8,7 @@
 - Branch name matches the PR title intent: `<type>/<kebab-case-summary>`.
 - Commit subject matches the PR title unless the PR intentionally contains multiple commits.
 - PR body summary matches the actual diff. No stale template text.
+- After every push that adds commits, re-audit title and description against the NO_REPLY check and Copy register sections below.
 
 Type:
 - [ ] feat
@@ -30,6 +31,25 @@ Type:
 - [ ] No secrets, tokens, private URLs, client context, legal context, or internal memory paths.
 - [ ] No private-method language unless explicitly approved for this PR.
 - [ ] No unnecessary implementation details beyond the public surface being changed.
+
+## NO_REPLY check
+
+PR titles and descriptions are public surfaces. Before push, scan for and strip:
+
+- [ ] Internal forward-roadmap leak (references to follow-up PRs, sequence steps, retired-as-outlier language).
+- [ ] Internal architecture-naming such as path-class deliberation labels.
+- [ ] Aspirational partner lists in human-facing description (partner stack belongs in `.github/copilot-instructions.md`, not in PR descriptions).
+- [ ] Money, pricing, dollar figures, fees, or rates.
+- [ ] Personal-history detail (substance use, somatic load, masking, recomposition narrative).
+- [ ] Forward-operational sequencing language ("we'll do X next", "after this lands").
+- [ ] Internal principle names from agent-context files on a public surface.
+
+## Copy register
+
+- [ ] R-COPY-1 (em-dash check) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-2 (forbidden register-tics) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-3 (canonical technical vocabulary) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-4 (no fixed-year establishment claim in visible chrome) verified per `.github/copilot-instructions.md`.
 
 ## Review-comment discipline
 
