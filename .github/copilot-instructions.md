@@ -28,7 +28,7 @@ Rules below are numbered so review comments can cite them directly (e.g., "viola
 
 **R-BOUNDARY-1 — never add or suggest:** secrets, tokens, credentials, or private URLs. *(Origin: PR #28.)*
 
-**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details for the orchestration system. *(Origin: PR #28.)*
+**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details of the private orchestration method (routing logic, scoring rubrics, agent-coordination patterns, behavioral-observation IP). Naming partners and the substantive role each plays in the visible stack (for example, "agent runtime", "mesh VPN", "frontier model provider") is permitted under R-PARTNERS-1; that is not a violation of this rule. *(Origin: PR #28.)*
 
 **R-BOUNDARY-3 — never add or suggest:** client context, private/non-consensual/safety-relevant/unnecessary PII, or private-method language. *(Origin: PR #28.)*
 
