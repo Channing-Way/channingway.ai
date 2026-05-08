@@ -30,10 +30,11 @@ jobs:
           echo "author=$author" >> "$GITHUB_OUTPUT"
 
       - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v4
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: 'latest'
           command: deploy --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
 
       - name: Wait for edge propagation
