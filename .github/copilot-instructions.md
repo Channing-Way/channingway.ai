@@ -1,129 +1,140 @@
 # Copilot instructions for channingway.ai
 
-This repository contains the public website source for channingway.ai.
+This file tells code-modifying agents what to change and what not to write on this repository's public surfaces. It is the agent-facing contract.
 
-Channing Way is a specialized AI systems practice focused on frontier-model orchestration for high-variance work. This repository is not the product, private implementation, operational substrate, client context, dispatch system, or internal memory.
+This repository contains the public website source for channingway.ai. Channing Way is a specialized AI systems practice focused on frontier-model orchestration for high-variance work. This repository is not the product, private implementation, operational substrate, client context, dispatch system, or internal memory.
+
+## Scope
+
+In scope for this file:
+- what an agent should change in the repo (files, URLs, schema)
+- what an agent should not write on public surfaces (boundary rules, copy register)
+- where to find sibling rules (CI lint, contributor policy)
+
+Out of scope for this file (do not absorb future rules about these here):
+- private orchestration internals
+- client-specific guidance
+- founder voice/tone for Substack drafts
+- branch-protection / signing / merge-authorization policy (lives in [`CONTRIBUTING.md`](../CONTRIBUTING.md))
+- machine-checkable text patterns (lives in [`.github/workflows/register-lint.yml`](workflows/register-lint.yml))
+
+## Rule IDs
+
+Rules below are numbered so review comments can cite them directly (e.g., "violates R-COPY-1"). Each rule has a one-line origin note pointing at the PR that introduced or last hardened it; that context is the reason the rule exists.
+
+---
 
 ## Public/private boundary
 
-Do not add or suggest:
-- secrets, tokens, credentials, or private URLs
-- private repository names
-- private, non-consensual, safety-relevant, or unnecessary PII
-- client context
-- internal memory paths
-- private-method language
-- implementation details for the orchestration system
-- references to legal matters or intellectual property of any kind
-- third-person personal references to the founder by first name
+**R-BOUNDARY-1 — never add or suggest:** secrets, tokens, credentials, or private URLs. *(Origin: PR #28.)*
 
-Already-public professional identifiers may remain when they are intentionally part of the public entity graph.
+**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details for the orchestration system. *(Origin: PR #28.)*
 
-Public copy may say:
-- Channing Way
-- frontier-model orchestration
-- high-variance work
-- API
-- POC
+**R-BOUNDARY-3 — never add or suggest:** client context, private/non-consensual/safety-relevant/unnecessary PII, or private-method language. *(Origin: PR #28.)*
 
-Do not explain how the private orchestration method works.
+**R-BOUNDARY-4 — never add or suggest:** references to legal matters or intellectual property of any kind. The boundary is absolute on this public surface; no qualified exceptions. *(Origin: PR #38, hardened in same PR.)*
+
+**R-BOUNDARY-5 — never add or suggest:** third-person personal references to the founder by first name. *(Origin: PR #38.)*
+
+**R-BOUNDARY-6 — do not explain how the private orchestration method works.** Already-public professional identifiers may remain when they are intentionally part of the public entity graph. *(Origin: PR #28.)*
+
+**Public copy may say:** Channing Way; frontier-model orchestration; high-variance work; API; POC.
+
+---
 
 ## Site style
 
-Keep the site minimal:
-- static HTML
-- monospace
-- dark/light color-scheme support
-- terse copy
-- no marketing bloat
-- no generic startup language
-- no unnecessary navigation or decorative UI
+**R-STYLE-1 — keep the site minimal:** static HTML, monospace, dark/light color-scheme support, terse copy, no marketing bloat, no generic startup language, no unnecessary navigation or decorative UI. Prefer removing copy over adding explanatory copy. *(Origin: PR #28.)*
 
-Prefer removing copy over adding explanatory copy.
+---
 
 ## Copy register
 
-- No em-dashes in visible copy. The em-dash is an AI-tell pattern actively being removed from public surfaces. Use periods, semicolons, colons, or parentheses instead.
-- No filler-prefix register-tics in public-facing text. Specifically forbidden: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`, and `substantively` when used as a filler adverb before another adjective ("substantively correct", "substantively shipping"). These read as register-overhead to outside observers, not load-bearing meaning. Plain English in public text. Applies to: page copy, PR descriptions, commit messages, PR/issue comments, review replies, public Substack posts, and any other public-facing artifact. Internal chat, private repos, and local memory files are exempt; this rule is specifically for surfaces that strangers can read.
-- Use canonical technical vocabulary, not paraphrased near-misses. Example: `continuum mechanics` (not `continuous mechanics`).
-- No "Established YYYY" or similar fixed-year establishment claims in visible page chrome. The Schema.org `foundingDate` covers this for crawlers; visible copy does not need to repeat it.
+These rules apply to all public-facing text: page copy, PR descriptions, commit messages, PR/issue comments, review replies, public Substack posts, and any other surface a stranger can read. Internal chat, private repos, and local memory files are exempt. Files that define or enforce these rules (this file, `.github/workflows/register-lint.yml`) may name or quote the forbidden patterns where necessary to specify the rule itself; that usage is exempt from the rule it defines.
 
-**Note on automated enforcement.** Copilot's PR review only inspects changed file diffs. PR descriptions, issue/PR comments, review replies, commit messages, and the PR title itself are **not auto-enforced** by the review bot. Agents writing those surfaces must self-audit against this section before submitting; do not assume Copilot will catch register issues in non-code text. Treat this section as a contract that applies whether or not an automated reviewer flags it.
+**Enforcement.** Rules R-COPY-1 through R-COPY-4 are enforced on checked-in visible-content files by [`.github/workflows/register-lint.yml`](workflows/register-lint.yml). The lint does **not** inspect PR bodies, issue comments, review replies, or commit messages — those are not in the working tree. Agents writing those surfaces must self-audit against the rules below before submitting. Do not assume an automated reviewer will flag register issues outside file diffs. *(Origin: PR #62 documented this scope limit; CI lint operationalized in this PR.)*
+
+**R-COPY-1 — no em-dashes (`—`) in visible copy.** The em-dash is an AI-tell pattern actively being removed from public surfaces. Use periods, semicolons, colons, or parentheses instead. *(Origin: PR #38.)*
+
+**R-COPY-2 — no filler-prefix register-tics.** Specifically forbidden: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`. These read as register-overhead to outside observers, not load-bearing meaning. Use plain English. *(Origin: PR #38; enumerated list added in PR #61 to close a vagueness loophole.)*
+
+**R-COPY-3 — use canonical technical vocabulary, not paraphrased near-misses.** Example: `continuum mechanics` (not `continuous mechanics`). *(Origin: PR #38.)*
+
+**R-COPY-4 — no "Established YYYY" or similar fixed-year establishment claims in visible page chrome.** The Schema.org `foundingDate` covers this for crawlers; visible copy does not need to repeat it. *(Origin: PR #38.)*
+
+---
 
 ## Files
 
 Primary public files:
-- `index.html`
-- `api.html`
-- `poc.html`
-- `sitemap.xml`
-- `llms.txt`
+- `public/index.html`
+- `public/api.html`
+- `public/poc.html`
+- `public/intake.html`
+- `public/sitemap.xml`
+- `public/llms.txt`
 - `README.md`
 
 Discovery and metadata:
-- `.well-known/openapi.json` (OpenAPI 3.1 spec for API endpoints)
-- `api/manifest.json` (Schema.org Organization JSON-LD)
-- `api/health.json` (static public-status document)
-- `_headers` (Cloudflare Workers Content-Type overrides)
+- `public/.well-known/openapi.json` (OpenAPI 3.1 spec for API endpoints)
+- `public/api/manifest.json` (Schema.org Organization JSON-LD)
+- `public/api/health.json` (static public-status document)
+- `public/_headers` (Cloudflare Workers Content-Type overrides)
 
-Deployment:
-- Cloudflare Workers Static Assets
-- production deploys from `main`
+Deployment: Cloudflare Workers Static Assets; production deploys from `main`.
+
+---
 
 ## URL canonicalization
 
-Public URLs are extensionless. Cloudflare 307-redirects `.html`-suffixed URLs to extensionless equivalents:
+**R-URL-1 — public URLs are extensionless.** Cloudflare 307-redirects `.html`-suffixed URLs to extensionless equivalents:
 - `/api.html` 307 -> `/api`
 - `/poc.html` 307 -> `/poc`
 
-Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, internal links) must use the extensionless form. Do not suggest reverting to `.html`-suffixed URLs.
+Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, internal links) must use the extensionless form. Do not revert to `.html`-suffixed URLs. *(Origin: PR #38, after a noisy iteration on PR #35.)*
+
+---
 
 ## Schema and metadata consistency
 
-Cross-file consistency must be maintained:
+**R-SCHEMA-1 — keep cross-file references aligned:**
 - `sitemap.xml` URLs match the canonical extensionless form
 - `og:url` meta tags match the canonical URL of each page
 - JSON-LD `@id` references match the canonical entity URLs
 - OpenAPI `servers` URLs match the deployed origin
 - `_headers` rules cover Content-Type overrides for non-default JSON variants (e.g., `application/ld+json` for `/api/manifest.json`)
 
-## Commits and signing
+*(Origin: PR #38.)*
 
-The `main` branch has `required_signatures` enabled. All commits to `main` must be signed.
-
-Agent-authored commits must be created via GitHub APIs that auto-sign:
-- GraphQL `createCommitOnBranch` mutation (preferred for multi-file commits)
-- REST `PUT /repos/{owner}/{repo}/contents/{path}` (one signed commit per file)
-
-Do not suggest agent workflows that use local `git commit` followed by `git push` from a personal access token. Local git from an agent token does not sign and will be blocked at merge by branch protection.
-
-## Auth boundaries
-
-This repository's branch-protection gates (`required_signatures`, conversation resolution, 1 approving review) must be satisfied legitimately, never bypassed.
-
-Agent identities (e.g., `channingway-agent`) may open PRs and create signed commits. Agents must NOT use the founder's personal account auth to approve, review, or merge. Those gates are reserved for the human operator.
-
-## Pull requests
-
-Use `.github/pull_request_template.md`.
-
-PR titles should use Conventional Commits:
-- `feat: ...`
-- `fix: ...`
-- `docs: ...`
-- `style: ...`
-- `chore: ...`
-
-The PR title, branch name, commit subject, and PR body must describe the same intent.
-
-Human review is required before merge. Emoji reactions and off-platform messages are acknowledgements only, not merge authorization.
+---
 
 ## Validation
 
-For HTML/static changes:
-- inspect the rendered page or Cloudflare preview
-- check that `sitemap.xml` parses and URLs are extensionless
-- check that no private-method or private-context language was added
-- check that public copy stays tight and minimal
-- check that no em-dashes were introduced into visible copy
-- check that canonical vocabulary is used on technical-field terms
+When making changes, verify the rules that apply to your diff:
+
+| If you changed... | Verify |
+| --- | --- |
+| any visible HTML/text | R-COPY-1 .. R-COPY-4 (also enforced by `register-lint`) |
+| HTML or sitemap URLs | R-URL-1, R-SCHEMA-1 |
+| OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
+| any public copy | R-BOUNDARY-1 .. R-BOUNDARY-6, R-STYLE-1 |
+
+For visual changes, also inspect the rendered page or Cloudflare preview.
+
+---
+
+## Pull requests
+
+Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, branch name, commit subject, and PR body must describe the same intent.
+
+Branch protection, signing, merge authorization, and auth boundaries live in [`CONTRIBUTING.md`](../CONTRIBUTING.md). Those gates are not actionable for an agent making code changes; they apply to the human operator and the PR-creation pipeline.
+
+---
+
+## Removed rules (history)
+
+Rules retired from this file. Listed so they are not silently reintroduced.
+
+- *"Established 2026" was permitted in the may-say list.* Removed in PR #38 after the visible string was dropped from page chrome in PR #37. Replaced by R-COPY-4 (negative rule against any `Established YYYY` in visible chrome).
+- *"capability receipts" was permitted in the may-say list.* Removed in PR #38 pending copy review; not currently sanctioned public vocabulary.
+- *"references to active legal matters or contested-IP language"* (qualified form). Tightened in PR #38 to the absolute form now stated as R-BOUNDARY-4; the qualifiers implied an exception class that was not intended.

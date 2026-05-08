@@ -1,0 +1,94 @@
+name: Register lint
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  register-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint visible public-facing text
+        shell: bash
+        run: |
+          set -u
+          fail=0
+
+          # Files in scope: visible content surfaces only.
+          # Page copy, sitemap, llms.txt, README, and the PR template
+          # (which is the default body for public PR descriptions).
+          # CSS, JSON, and config comments are out of scope.
+          mapfile -t files < <(printf '%s\n' \
+            public/index.html \
+            public/api.html \
+            public/poc.html \
+            public/intake.html \
+            public/llms.txt \
+            public/sitemap.xml \
+            README.md \
+            .github/pull_request_template.md)
+
+          # Filter to files that actually exist (so renames don't false-fail).
+          existing=()
+          for f in "${files[@]}"; do
+            [ -f "$f" ] && existing+=("$f")
+          done
+
+          report() {
+            local rule="$1" pattern="$2"
+            shift 2
+            # -P uses PCRE so \x{2014} works for em-dash.
+            if grep -nP --color=never "$pattern" "${existing[@]}" >/tmp/hits 2>/dev/null; then
+              echo "::group::$rule violations"
+              echo "Pattern: $pattern"
+              sed 's/^/  /' /tmp/hits
+              echo "::endgroup::"
+              # Use NUL-delimited filenames for annotations so colon-containing
+              # paths do not break parsing. GNU grep emits file<NUL>line:match.
+              while IFS= read -r -d '' file && IFS= read -r rest; do
+                lineno=${rest%%:*}
+                msg=${rest#*:}
+                # Escape per GitHub Actions workflow-command rules so a literal
+                # %, CR, or LF in a matched line cannot break the annotation
+                # or allow command injection.
+                msg=${msg//%/%25}
+                msg=${msg//$'\r'/%0D}
+                msg=${msg//$'\n'/%0A}
+                echo "::error file=${file},line=${lineno}::${rule}: ${msg}"
+              done < <(grep -nHP -Z --color=never "$pattern" "${existing[@]}" 2>/dev/null)
+              fail=1
+            fi
+          }
+
+          # R-COPY-1: no em-dashes in visible copy.
+          report "R-COPY-1 (em-dash in visible copy)" '\x{2014}'
+
+          # R-COPY-2: no filler-prefix register-tics.
+          report "R-COPY-2 (banned register-tic)" \
+            '\bsubstrate-(fluent|naive|real|class|honest)\b'
+
+          # R-COPY-3: canonical technical vocabulary.
+          report "R-COPY-3 (use 'continuum mechanics', not 'continuous mechanics')" \
+            '\bcontinuous mechanics\b'
+
+          # R-COPY-4: no 'Established YYYY' in visible chrome.
+          report "R-COPY-4 (Established YYYY in visible copy)" \
+            '\bEstablished[[:space:]]+[0-9]{4}\b'
+
+          if [ "$fail" -ne 0 ]; then
+            echo ""
+            echo "Register lint failed. See .github/copilot-instructions.md (Copy register section) for rule definitions."
+            exit 1
+          fi
+
+          echo "Register lint passed across ${#existing[@]} files."

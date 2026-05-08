@@ -43,7 +43,7 @@ Reviewers:
 ## Visual / copy review
 
 - [ ] Preview checked, if visual.
-- [ ] Copy is tight and substrate-honest.
+- [ ] Copy is tight and accurate.
 
 ## Verification
 
