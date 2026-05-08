@@ -13,7 +13,8 @@ Channing Way builds frontier-model orchestration for high-variance work. Special
 
 ## Engagement
 
-Submit engagement inquiries at /intake. Free-text describing the engagement.
+For engagement inquiries: submit at /intake (free-text describing the engagement).
+For repository issues or bug reports: open at https://github.com/Channing-Way/channingway.ai/issues.
 
 ## Links
 
