@@ -66,6 +66,12 @@ async function handleIntake(request, env) {
     ? task.slice(0, EMBED_VALUE_MAX - 4) + ' ...'
     : task;
 
+  // Neutralize @ in user-provided text. allowed_mentions governs the top-level
+  // content but Discord may honor the user allowlist inside embed fields too;
+  // a zero-width space after @ keeps the text visually identical while breaking
+  // mention syntax (covers <@user>, <@!user>, <@&role>, @everyone, @here).
+  const safeTaskValue = taskValue.replace(/@/g, '@\u200b');
+
   const rawVelId = String(env.VEL_USER_ID || '').trim();
   const velUserId = /^\d{17,19}$/.test(rawVelId) ? rawVelId : null;
 
@@ -78,7 +84,7 @@ async function handleIntake(request, env) {
       title: 'New job intake',
       color: 0x222222,
       fields: [
-        { name: 'Task', value: taskValue },
+        { name: 'Task', value: safeTaskValue },
         { name: 'Urgency', value: URGENCY_LABELS[urgency], inline: true },
         { name: 'Submitted at', value: submittedAt, inline: true }
       ],
