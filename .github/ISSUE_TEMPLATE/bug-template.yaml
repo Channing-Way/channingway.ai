@@ -1,0 +1,31 @@
+name: "🐛 Bug Report"
+description: Report an issue with channingway.ai or this repository
+type: Bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing. Please describe the issue in as much detail as possible. For engagement inquiries (paid work, partnerships, substantive collaboration), use [/intake](https://channingway.ai/intake) instead.
+
+  - type: textarea
+    attributes:
+      label: What's wrong?
+      description: Describe the issue and how you encountered it. Steps to reproduce, what you saw, what you expected.
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: URL or page
+      description: Where on the site did you see the issue?
+      placeholder: https://channingway.ai/...
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Browser or context
+      description: Browser version, device, or any relevant environment context. Screenshots welcome.
+    validations:
+      required: false
