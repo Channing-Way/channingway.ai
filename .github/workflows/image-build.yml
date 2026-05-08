@@ -1,0 +1,50 @@
+name: Build cw-build container
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/image-build.yml'
+      - '.dockerignore'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: ghcr.io/channing-way/cw-build
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Minimus registry
+        run: |
+          echo "${{ secrets.MINIMUS_TENANT_ID }}" | docker login reg.mini.dev -u minimus --password-stdin
+
+      - name: Login to GHCR
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build cw-build image
+        run: |
+          docker build --pull \
+            --build-arg MINIMUS_TENANT_ID="${{ secrets.MINIMUS_TENANT_ID }}" \
+            -t ${{ env.IMAGE_NAME }}:latest \
+            -t "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
+            .
+
+      - name: Push to GHCR
+        run: |
+          docker push "${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          docker push ${{ env.IMAGE_NAME }}:latest
