@@ -100,10 +100,12 @@
     <div class="status" id="status" role="status" aria-live="polite"></div>
   </form>
 
-  <h2 class="gray small">What happens next</h2>
-  <p class="gray small">
-    You’ll get ≤ 3 clarifying questions within 24 hours, then a locked spec.
-  </p>
+  <div id="next-steps">
+    <h2 class="gray small">What happens next</h2>
+    <p class="gray small">
+      You’ll get ≤ 3 clarifying questions within 24 hours, then a locked spec.
+    </p>
+  </div>
 
   <p><a href="/">← home</a></p>
 </main>
@@ -118,6 +120,7 @@
   const counter = document.getElementById('counter');
   const status = document.getElementById('status');
   const submitBtn = document.getElementById('submit-btn');
+  const nextStepsEl = document.getElementById('next-steps');
 
   taskEl.addEventListener('input', () => {
     const n = taskEl.value.length;
@@ -157,6 +160,7 @@
         counter.textContent = '0';
         counter.parentElement.classList.remove('warn');
         submitBtn.disabled = false;
+        nextStepsEl.style.display = 'none';
       } else {
         showStatus(data.error || 'Submission failed (status ' + resp.status + '). Email bethany@channingway.ai directly.', false);
         submitBtn.disabled = false;
