@@ -8,7 +8,7 @@
 - Branch name matches the PR title intent: `<type>/<kebab-case-summary>`.
 - Commit subject matches the PR title unless the PR intentionally contains multiple commits.
 - PR body summary matches the actual diff. No stale template text.
-- After every push that adds commits, re-audit title and description against the rules below.
+- After every push that adds commits, re-audit title and description against the NO_REPLY check and Copy register sections below.
 
 Type:
 - [ ] feat
@@ -34,21 +34,22 @@ Type:
 
 ## NO_REPLY check
 
-PR titles and descriptions are public surfaces. Strip before push:
+PR titles and descriptions are public surfaces. Before push, scan for and strip:
 
-- [ ] No "Forward state (separate PR)", "PR B in the planned sequence", or "outliers being reverted in a follow-up". These leak internal roadmap.
-- [ ] No "Path A / Path B / Path C" architecture-naming. Internal deliberation.
-- [ ] No aspirational partner lists. Partner stack belongs in `.github/copilot-instructions.md`, not in PR descriptions.
-- [ ] No money, pricing, dollar figures, fees, or rates.
-- [ ] No personal-history detail (substance use, somatic load, masking, recomposition narrative).
-- [ ] No "we'll do X next" or "after this lands" forward-operational sequencing.
-- [ ] No internal principle names from `.github/copilot-instructions.md` or unpublished context on public surface.
+- [ ] Internal forward-roadmap leak (references to follow-up PRs, sequence steps, retired-as-outlier language).
+- [ ] Internal architecture-naming such as path-class deliberation labels.
+- [ ] Aspirational partner lists in human-facing description (partner stack belongs in `.github/copilot-instructions.md`, not in PR descriptions).
+- [ ] Money, pricing, dollar figures, fees, or rates.
+- [ ] Personal-history detail (substance use, somatic load, masking, recomposition narrative).
+- [ ] Forward-operational sequencing language ("we'll do X next", "after this lands").
+- [ ] Internal principle names from agent-context files on a public surface.
 
 ## Copy register
 
-- [ ] No em-dashes (—) in PR title, description, or comments. Use periods, semicolons, parentheses, or colons.
-- [ ] No filler register-tics: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`. No `substantively` as filler-adverb before another adjective.
-- [ ] Canonical technical vocabulary, not paraphrased near-misses.
+- [ ] R-COPY-1 (em-dash check) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-2 (forbidden register-tics) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-3 (canonical technical vocabulary) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-4 (no fixed-year establishment claim in visible chrome) verified per `.github/copilot-instructions.md`.
 
 ## Review-comment discipline
 
@@ -62,7 +63,7 @@ Reviewers:
 ## Visual / copy review
 
 - [ ] Preview checked, if visual.
-- [ ] Copy is tight and uses plain English.
+- [ ] Copy is tight and accurate.
 
 ## Verification
 
