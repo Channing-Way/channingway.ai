@@ -35,7 +35,10 @@ Partner relationships and stack composition are intentionally visible. Channing 
 Partners that may be openly named in repo files, PR descriptions, deployment configs, and Substack:
 - Minimus — hardened-image substrate / MinimOS Node base
 - Cloudflare — Workers and WAF
-- xAI and other model providers — agent runtime
+- Anthropic — claude as substrate, agent runtime, primary frontier model partner
+- xAI — frontier model provider, agent runtime
+- Nous Research — frontier model and Hermes agentic harness
+- OpenRouter — multi-model routing for cross-provider evaluation
 - Wispr Flow — voice-first capture (forward integration)
 
 Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited.
