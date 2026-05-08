@@ -62,15 +62,11 @@ async function handleIntake(request, env) {
   }
 
   const submittedAt = new Date().toISOString();
-  const taskValue = task.length > EMBED_VALUE_MAX
-    ? task.slice(0, EMBED_VALUE_MAX - 4) + ' ...'
-    : task;
-
-  // Neutralize @ in user-provided text. allowed_mentions governs the top-level
-  // content but Discord may honor the user allowlist inside embed fields too;
-  // a zero-width space after @ keeps the text visually identical while breaking
-  // mention syntax (covers <@user>, <@!user>, <@&role>, @everyone, @here).
-  const safeTaskValue = taskValue.replace(/@/g, '@\u200b');
+  // Sanitize first, then truncate so the final value stays within EMBED_VALUE_MAX.
+  const safeTask = task.replace(/@/g, '@\u200b');
+  const safeTaskValue = safeTask.length > EMBED_VALUE_MAX
+    ? safeTask.slice(0, EMBED_VALUE_MAX - 4) + ' ...'
+    : safeTask;
 
   const rawVelId = String(env.VEL_USER_ID || '').trim();
   const velUserId = /^\d{17,19}$/.test(rawVelId) ? rawVelId : null;
