@@ -71,11 +71,6 @@ jobs:
           report "R-COPY-2 (banned register-tic)" \
             '\bsubstrate-(fluent|naive|real|class|honest)\b'
 
-          # R-COPY-2b: 'substantively' as filler adverb before an adjective.
-          # Matches 'substantively <word>' where the next word is alphabetic.
-          report "R-COPY-2 (substantively-as-filler-adverb)" \
-            '\bsubstantively[[:space:]]+[A-Za-z]'
-
           # R-COPY-3: canonical technical vocabulary.
           report "R-COPY-3 (use 'continuum mechanics', not 'continuous mechanics')" \
             '\bcontinuous mechanics\b'

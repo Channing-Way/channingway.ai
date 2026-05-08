@@ -56,7 +56,7 @@ These rules apply to all public-facing text: page copy, PR descriptions, commit 
 
 **R-COPY-1 — no em-dashes (`—`) in visible copy.** The em-dash is an AI-tell pattern actively being removed from public surfaces. Use periods, semicolons, colons, or parentheses instead. *(Origin: PR #38.)*
 
-**R-COPY-2 — no filler-prefix register-tics.** Specifically forbidden: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`, and `substantively` when used as a filler adverb before another adjective ("substantively correct", "substantively shipping"). These read as register-overhead to outside observers, not load-bearing meaning. Use plain English. *(Origin: PR #38; enumerated list added in PR #61 to close a vagueness loophole.)*
+**R-COPY-2 — no filler-prefix register-tics.** Specifically forbidden: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`. These read as register-overhead to outside observers, not load-bearing meaning. Use plain English. *(Origin: PR #38; enumerated list added in PR #61 to close a vagueness loophole.)*
 
 **R-COPY-3 — use canonical technical vocabulary, not paraphrased near-misses.** Example: `continuum mechanics` (not `continuous mechanics`). *(Origin: PR #38.)*
 
