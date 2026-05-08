@@ -22,7 +22,7 @@ Agent-authored commits must be created via GitHub APIs that auto-sign:
 - GraphQL `createCommitOnBranch` mutation (preferred for multi-file commits)
 - REST `PUT /repos/{owner}/{repo}/contents/{path}` (one signed commit per file)
 
-Local `git commit` followed by `git push` from a personal access token does not sign and will be blocked at merge by branch protection. Do not use that path for agent workflows.
+Local `git commit` is not auto-signed unless GPG or SSH signing is configured. Agent workflows using local git plus a PAT-based push typically produce unsigned commits, which `required_signatures` will reject at merge. The GitHub API paths above auto-sign without local key configuration; use them for agent workflows.
 
 ## Auth boundaries
 
