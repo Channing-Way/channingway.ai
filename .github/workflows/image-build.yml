@@ -13,6 +13,9 @@ permissions:
   contents: read
   packages: write
 
+env:
+  IMAGE_NAME: ghcr.io/channing-way/cw-build
+
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
@@ -37,11 +40,11 @@ jobs:
         run: |
           docker build --pull \
             --build-arg MINIMUS_TENANT_ID="${{ secrets.MINIMUS_TENANT_ID }}" \
-            -t ghcr.io/channing-way/cw-build:latest \
-            -t "ghcr.io/channing-way/cw-build:${{ github.sha }}" \
+            -t ${{ env.IMAGE_NAME }}:latest \
+            -t "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
             .
 
       - name: Push to GHCR
         run: |
-          docker push "ghcr.io/channing-way/cw-build:${{ github.sha }}"
-          docker push ghcr.io/channing-way/cw-build:latest
+          docker push "${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          docker push ${{ env.IMAGE_NAME }}:latest
