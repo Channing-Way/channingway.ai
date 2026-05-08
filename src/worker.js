@@ -18,6 +18,7 @@ const URGENCY_LABELS = {
   '1mo': 'Within 1 month',
   'flex': 'Flexible / no rush'
 };
+const VEL_USER_ID = '1480025977214992516';
 
 export default {
   async fetch(request, env) {
@@ -79,7 +80,8 @@ async function handleIntake(request, env) {
 
   const payload = {
     username: 'Channing Way Intake',
-    allowed_mentions: { parse: [] },
+    content: `<@${VEL_USER_ID}>`,
+    allowed_mentions: { users: [VEL_USER_ID] },
     embeds: [{
       title: 'New job intake',
       color: 0x222222,
