@@ -54,12 +54,13 @@ jobs:
               cat /tmp/hits | sed 's/^/  /'
               echo "::endgroup::"
               while IFS= read -r line; do
-                # GitHub problem-matcher style annotation.
-                file="${line%%:*}"
-                rest="${line#*:}"
-                lineno="${rest%%:*}"
-                msg="$rule: ${rest#*:}"
-                echo "::error file=${file},line=${lineno}::${msg}"
+                # GitHub problem-matcher style annotation. Use awk so paths
+                # with colons (unlikely here, but cheap to handle) don't
+                # break the file:line:msg split.
+                file=$(printf '%s' "$line" | awk -F: '{print $1}')
+                lineno=$(printf '%s' "$line" | awk -F: '{print $2}')
+                msg=$(printf '%s' "$line" | awk -F: '{for (i=3; i<=NF; i++) printf "%s%s", $i, (i<NF?":":"")}')
+                echo "::error file=${file},line=${lineno}::${rule}: ${msg}"
               done < /tmp/hits
               fail=1
             fi
