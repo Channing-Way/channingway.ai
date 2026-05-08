@@ -39,8 +39,8 @@ Partners that may be openly named in repo files, PR descriptions, deployment con
 - xAI — frontier model provider, agent runtime
 - Nous Research — frontier model and Hermes agentic harness
 - OpenRouter — multi-model routing for cross-provider evaluation
-- Tailscale — private network mesh, secure mobile-class access
-- Discord — agent messaging surface (Vel deploys through Discord)
+- Tailscale — secure mesh VPN; private network access across devices
+- Discord — Vel deploys through Discord
 - Wispr Flow — voice-first capture (forward integration)
 
 Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited.
