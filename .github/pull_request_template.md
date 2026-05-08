@@ -8,6 +8,7 @@
 - Branch name matches the PR title intent: `<type>/<kebab-case-summary>`.
 - Commit subject matches the PR title unless the PR intentionally contains multiple commits.
 - PR body summary matches the actual diff. No stale template text.
+- After every push that adds commits, re-audit title and description against the rules below.
 
 Type:
 - [ ] feat
@@ -31,6 +32,24 @@ Type:
 - [ ] No private-method language unless explicitly approved for this PR.
 - [ ] No unnecessary implementation details beyond the public surface being changed.
 
+## NO_REPLY check
+
+PR titles and descriptions are public surfaces. Strip before push:
+
+- [ ] No "Forward state (separate PR)", "PR B in the planned sequence", or "outliers being reverted in a follow-up". These leak internal roadmap.
+- [ ] No "Path A / Path B / Path C" architecture-naming. Internal deliberation.
+- [ ] No aspirational partner lists. Partner stack belongs in `.github/copilot-instructions.md`, not in PR descriptions.
+- [ ] No money, pricing, dollar figures, fees, or rates.
+- [ ] No personal-history detail (substance use, somatic load, masking, recomposition narrative).
+- [ ] No "we'll do X next" or "after this lands" forward-operational sequencing.
+- [ ] No internal principle names from `.github/copilot-instructions.md` or unpublished context on public surface.
+
+## Copy register
+
+- [ ] No em-dashes (—) in PR title, description, or comments. Use periods, semicolons, parentheses, or colons.
+- [ ] No filler register-tics: `substrate-fluent`, `substrate-naive`, `substrate-real`, `substrate-class`, `substrate-honest`. No `substantively` as filler-adverb before another adjective.
+- [ ] Canonical technical vocabulary, not paraphrased near-misses.
+
 ## Review-comment discipline
 
 PR comments on this repo are public-facing review surfaces. Apply the same public/private boundary check to review bodies and inline comments before posting.
@@ -43,7 +62,7 @@ Reviewers:
 ## Visual / copy review
 
 - [ ] Preview checked, if visual.
-- [ ] Copy is tight and substrate-honest.
+- [ ] Copy is tight and uses plain English.
 
 ## Verification
 
