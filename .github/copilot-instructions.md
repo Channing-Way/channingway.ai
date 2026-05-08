@@ -33,15 +33,15 @@ Do not explain how the private orchestration method works.
 Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
 
 Partners that may be openly named in repo files, PR descriptions, deployment configs, and Substack:
-- Minimus — hardened-image substrate / MinimOS Node base
-- Cloudflare — Workers and WAF
-- Anthropic — claude as substrate, agent runtime, primary frontier model partner
-- xAI — frontier model provider, agent runtime
-- Nous Research — frontier model and Hermes agentic harness
-- OpenRouter — multi-model routing for cross-provider evaluation
-- Tailscale — secure mesh VPN; private network access across devices
-- Discord — Vel deploys through Discord
-- Wispr Flow — voice-first capture (forward integration)
+- Minimus: hardened-image substrate / MinimOS Node base
+- Cloudflare: Workers and WAF
+- Anthropic: claude as substrate, agent runtime, primary frontier model partner
+- xAI: frontier model provider, agent runtime
+- Nous Research: frontier model and Hermes agentic harness
+- OpenRouter: multi-model routing for cross-provider evaluation
+- Tailscale: secure mesh VPN; private network access across devices
+- Discord: Vel deploys through Discord
+- Wispr Flow: voice-first capture (forward integration)
 
 Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited.
 
@@ -119,7 +119,7 @@ Reproducibility lives at the composed-image / SHA-tagged-artifact layer, not at 
 
 Do not recommend pinning specific Node versions, specific Ubuntu LTS versions, specific npm package versions, or specific Docker image digests when reviewing this repo. The leading-edge philosophy is intentional.
 
-Existing pins that landed as stopgaps for unrelated bugs (for example the `wrangler@4.90.0` and `ubuntu-22.04` pins in `cloudflare-deployment.yml` from PR #69) are outliers being reverted. When reviewing, actively look for implicit version pinning anywhere in the repo — Dockerfile `FROM` tags, npm dependency pinning, action version pins beyond the major, OS image pins, model-version pins — and flag them so they can be moved back to leading-edge.
+Existing pins that landed as stopgaps for unrelated bugs (for example the `wrangler@4.90.0` and `ubuntu-22.04` pins in `cloudflare-deployment.yml` from PR #69) are outliers being reverted. When reviewing, actively look for implicit version pinning anywhere in the repo (Dockerfile `FROM` tags, npm dependency pinning, action version pins beyond the major, OS image pins, model-version pins) and flag them so they can be moved back to leading-edge.
 
 Exception: GitHub Actions major-version refs (`@v4`, `@v3`) are acceptable forward-drift since major-version bumps signal breaking changes. Do not pin actions to specific commit SHAs unless there is a documented supply-chain reason.
 
