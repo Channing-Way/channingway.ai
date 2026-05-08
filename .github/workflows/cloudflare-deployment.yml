@@ -19,10 +19,8 @@ jobs:
       - name: Extract commit subject + author for deploy message
         id: msg
         run: |
-          # Strip double-quotes from subject so YAML interpolation doesnt break the
-          # shell argument when titles contain quoted phrases (e.g., fix: hide "X" section).
           subject=$(git log -1 --pretty=%s | tr -d '"')
-          author=$(git log -1 --pretty=%an | tr -d '"')
+          author=$(git log -1 --pretty=%an)
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
           echo "author=$author" >> "$GITHUB_OUTPUT"
 
