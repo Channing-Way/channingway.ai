@@ -85,3 +85,9 @@ jobs:
               \"environment_url\": \"https://channingway.ai/\",
               \"description\": \"Verified: $STATE\"
             }"
+
+      - name: Fail job if live-site verification failed
+        if: steps.verify.outputs.result == 'failure'
+        run: |
+          echo "Live site verification failed. See Verify live site step output."
+          exit 1
