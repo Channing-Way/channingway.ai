@@ -58,6 +58,12 @@ jobs:
               while IFS= read -r -d '' file && IFS= read -r rest; do
                 lineno=${rest%%:*}
                 msg=${rest#*:}
+                # Escape per GitHub Actions workflow-command rules so a literal
+                # %, CR, or LF in a matched line cannot break the annotation
+                # or allow command injection.
+                msg=${msg//%/%25}
+                msg=${msg//$'\r'/%0D}
+                msg=${msg//$'\n'/%0A}
                 echo "::error file=${file},line=${lineno}::${rule}: ${msg}"
               done < <(grep -nHP -Z --color=never "$pattern" "${existing[@]}" 2>/dev/null)
               fail=1
