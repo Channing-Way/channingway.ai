@@ -7,7 +7,9 @@ FROM reg.mini.dev/${MINIMUS_TENANT_ID}/node:latest
 LABEL org.opencontainers.image.source=https://github.com/Channing-Way/channingway.ai
 
 USER root
-RUN npm install -g wrangler@latest
+RUN npm install -g wrangler@latest && \
+    mkdir -p /workspace && \
+    chown node:node /workspace
 USER node
 
 WORKDIR /workspace
