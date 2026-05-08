@@ -67,7 +67,7 @@ async function handleIntake(request, env) {
     : task;
 
   const rawVelId = String(env.VEL_USER_ID || '').trim();
-  const velUserId = /^\d+$/.test(rawVelId) ? rawVelId : null;
+  const velUserId = /^\d{17,19}$/.test(rawVelId) ? rawVelId : null;
 
   const payload = {
     username: 'Channing Way Intake',
