@@ -67,7 +67,7 @@ jobs:
           }
 
           # R-COPY-1: no em-dashes in visible copy.
-          report "R-COPY-1 (em-dash in visible copy)" $'\xe2\x80\x94'
+          report "R-COPY-1 (em-dash in visible copy)" '\x{2014}'
 
           # R-COPY-2: no filler-prefix register-tics.
           report "R-COPY-2 (banned register-tic)" \
