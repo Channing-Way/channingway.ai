@@ -9,6 +9,12 @@ Channing Way builds frontier-model orchestration for high-variance work. Special
 - [/]: public landing page
 - [/api]: phase 1 read-only
 - [/poc]: proof of concept
+- [/intake]: engagement intake form
+
+## Engagement
+
+Submit engagement inquiries as free-text at [/intake].
+File repository issues at https://github.com/Channing-Way/channingway.ai/issues.
 
 ## Links
 
