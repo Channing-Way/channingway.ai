@@ -5,6 +5,11 @@
  *   POST /api/intake/submit  — intake form handler; proxies to Discord webhook
  *                              stored as Wrangler secret DISCORD_WEBHOOK_URL.
  *   *                         — static assets via ASSETS binding.
+ *
+ * Optional secret: VEL_USER_ID — Discord user ID of the agent to ping when
+ * a submission lands. If set, the webhook content includes `<@VEL_USER_ID>`
+ * and allowed_mentions is tightened to that user only. If unset, no ping is
+ * sent and all mentions are suppressed (original behavior).
  */
 
 const ALLOWED_ORIGINS = ['https://channingway.ai', 'https://www.channingway.ai'];
@@ -18,7 +23,6 @@ const URGENCY_LABELS = {
   '1mo': 'Within 1 month',
   'flex': 'Flexible / no rush'
 };
-const VEL_USER_ID = '1480025977214992516';
 
 export default {
   async fetch(request, env) {
@@ -78,10 +82,11 @@ async function handleIntake(request, env) {
     ? task.slice(0, EMBED_VALUE_MAX - 4) + ' ...'
     : task;
 
+  const velUserId = env.VEL_USER_ID;
+
   const payload = {
     username: 'Channing Way Intake',
-    content: `<@${VEL_USER_ID}>`,
-    allowed_mentions: { users: [VEL_USER_ID] },
+    allowed_mentions: velUserId ? { users: [velUserId] } : { parse: [] },
     embeds: [{
       title: 'New job intake',
       color: 0x222222,
@@ -94,6 +99,10 @@ async function handleIntake(request, env) {
       timestamp: submittedAt
     }]
   };
+
+  if (velUserId) {
+    payload.content = `<@${velUserId}>`;
+  }
 
   let resp;
   try {
