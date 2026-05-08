@@ -1,0 +1,94 @@
+name: Register lint
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  register-lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint visible public-facing text
+        shell: bash
+        run: |
+          set -u
+          fail=0
+
+          # Files in scope: visible content surfaces only.
+          # Page copy, sitemap, llms.txt, README, and the PR template
+          # (which is the default body for public PR descriptions).
+          # CSS, JSON, and config comments are out of scope.
+          mapfile -t files < <(printf '%s\n' \
+            public/index.html \
+            public/api.html \
+            public/poc.html \
+            public/intake.html \
+            public/llms.txt \
+            public/sitemap.xml \
+            README.md \
+            .github/pull_request_template.md)
+
+          # Filter to files that actually exist (so renames don't false-fail).
+          existing=()
+          for f in "${files[@]}"; do
+            [ -f "$f" ] && existing+=("$f")
+          done
+
+          report() {
+            local rule="$1" pattern="$2"
+            shift 2
+            # -P uses PCRE so \x{2014} works for em-dash.
+            if grep -nP --color=never "$pattern" "${existing[@]}" >/tmp/hits 2>/dev/null; then
+              echo "::group::$rule violations"
+              echo "Pattern: $pattern"
+              cat /tmp/hits | sed 's/^/  /'
+              echo "::endgroup::"
+              while IFS= read -r line; do
+                # GitHub problem-matcher style annotation.
+                file="${line%%:*}"
+                rest="${line#*:}"
+                lineno="${rest%%:*}"
+                msg="$rule: ${rest#*:}"
+                echo "::error file=${file},line=${lineno}::${msg}"
+              done < /tmp/hits
+              fail=1
+            fi
+          }
+
+          # R-COPY-1: no em-dashes in visible copy.
+          report "R-COPY-1 (em-dash in visible copy)" $'\xe2\x80\x94'
+
+          # R-COPY-2: no filler-prefix register-tics.
+          report "R-COPY-2 (banned register-tic)" \
+            '\bsubstrate-(fluent|naive|real|class|honest)\b'
+
+          # R-COPY-2b: 'substantively' as filler adverb before an adjective.
+          # Matches 'substantively <word>' where the next word is alphabetic.
+          report "R-COPY-2 (substantively-as-filler-adverb)" \
+            '\bsubstantively[[:space:]]+[A-Za-z]'
+
+          # R-COPY-3: canonical technical vocabulary.
+          report "R-COPY-3 (use 'continuum mechanics', not 'continuous mechanics')" \
+            '\bcontinuous mechanics\b'
+
+          # R-COPY-4: no 'Established YYYY' in visible chrome.
+          report "R-COPY-4 (Established YYYY in visible copy)" \
+            '\bEstablished[[:space:]]+[0-9]{4}\b'
+
+          if [ "$fail" -ne 0 ]; then
+            echo ""
+            echo "Register lint failed. See .github/copilot-instructions.md (Copy register section) for rule definitions."
+            exit 1
+          fi
+
+          echo "Register lint passed across ${#existing[@]} files."
