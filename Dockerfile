@@ -4,6 +4,6 @@
 ARG MINIMUS_TENANT_ID
 FROM reg.mini.dev/${MINIMUS_TENANT_ID}/node:latest
 
-RUN npm install -g wrangler@4.90.0
+RUN npm install -g wrangler@latest
 
 WORKDIR /workspace
