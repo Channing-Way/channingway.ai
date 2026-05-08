@@ -28,6 +28,20 @@ Public copy may say:
 
 Do not explain how the private orchestration method works.
 
+## Partners and visible-stack composition
+
+Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
+
+Partners that may be openly named in repo files, PR descriptions, deployment configs, and Substack:
+- Minimus — hardened-image substrate / MinimOS Node base
+- Cloudflare — Workers and WAF
+- xAI and other model providers — agent runtime
+- Wispr Flow — voice-first capture (forward integration)
+
+Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials (for example, the Minimus tenant ID, which doubles as a registry password) are secrets and must not appear in source. But the partner relationship itself is publicly credited.
+
+Stack composition is also publicly visible. Do not flag "this exposes which infrastructure we use" as a concern; that exposure is intentional.
+
 ## Site style
 
 Keep the site minimal:
@@ -86,6 +100,23 @@ Cross-file consistency must be maintained:
 - JSON-LD `@id` references match the canonical entity URLs
 - OpenAPI `servers` URLs match the deployed origin
 - `_headers` rules cover Content-Type overrides for non-default JSON variants (e.g., `application/ld+json` for `/api/manifest.json`)
+
+## Versioning: always latest, never pin
+
+Component versions are not pinned in this repository. Use:
+- `:latest` for container base images
+- `@latest` for npm packages installed at build time
+- `ubuntu-latest` for GitHub Actions runners
+- `@v<major>` for GitHub Actions (forward-drift within major)
+- Current frontier model versions, not stable-from-six-months-ago
+
+Reproducibility lives at the composed-image / SHA-tagged-artifact layer, not at the component-version layer. The `cw-build` container is tagged with the git SHA on every build; downstream workflows pull by SHA. Components inside the image forward-drift between rebuilds; the artifact-as-a-whole is reproducible by SHA tag.
+
+Do not recommend pinning specific Node versions, specific Ubuntu LTS versions, specific npm package versions, or specific Docker image digests when reviewing this repo. The leading-edge philosophy is intentional.
+
+Existing pins that landed as stopgaps for unrelated bugs (for example the `wrangler@4.90.0` and `ubuntu-22.04` pins in `cloudflare-deployment.yml` from PR #69) are outliers being reverted. When reviewing, actively look for implicit version pinning anywhere in the repo — Dockerfile `FROM` tags, npm dependency pinning, action version pins beyond the major, OS image pins, model-version pins — and flag them so they can be moved back to leading-edge.
+
+Exception: GitHub Actions major-version refs (`@v4`, `@v3`) are acceptable forward-drift since major-version bumps signal breaking changes. Do not pin actions to specific commit SHAs unless there is a documented supply-chain reason.
 
 ## Commits and signing
 
