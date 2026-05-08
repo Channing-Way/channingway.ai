@@ -4,6 +4,8 @@
 ARG MINIMUS_TENANT_ID
 FROM reg.mini.dev/${MINIMUS_TENANT_ID}/node:latest
 
+LABEL org.opencontainers.image.source=https://github.com/Channing-Way/channingway.ai
+
 RUN npm install -g wrangler@latest
 
 WORKDIR /workspace
