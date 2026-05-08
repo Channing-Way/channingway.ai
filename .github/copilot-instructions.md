@@ -50,7 +50,7 @@ Rules below are numbered so review comments can cite them directly (e.g., "viola
 
 ## Copy register
 
-These rules apply to all public-facing text: page copy, PR descriptions, commit messages, PR/issue comments, review replies, public Substack posts, and any other surface a stranger can read. Internal chat, private repos, and local memory files are exempt.
+These rules apply to all public-facing text: page copy, PR descriptions, commit messages, PR/issue comments, review replies, public Substack posts, and any other surface a stranger can read. Internal chat, private repos, and local memory files are exempt. Files that define or enforce these rules (this file, `.github/workflows/register-lint.yml`) may name or quote the forbidden patterns where necessary to specify the rule itself; that usage is exempt from the rule it defines.
 
 **Enforcement.** Rules R-COPY-1 through R-COPY-4 are enforced on checked-in visible-content files by [`.github/workflows/register-lint.yml`](workflows/register-lint.yml). The lint does **not** inspect PR bodies, issue comments, review replies, or commit messages — those are not in the working tree. Agents writing those surfaces must self-audit against the rules below before submitting. Do not assume an automated reviewer will flag register issues outside file diffs. *(Origin: PR #62 documented this scope limit; CI lint operationalized in this PR.)*
 
