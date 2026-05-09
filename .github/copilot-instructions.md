@@ -153,6 +153,16 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 The substantive output of the automated reviewer (score and reasoning) IS the metric. No formula, no weights, no hard-coded thresholds; the metric drifts forward with the substrate. *(Origin: PR #83.)*
 
+**R-IDS-2 — every PR declares exactly one Information Density target tier (high, medium, or low) in the PR template.** The IDS is evaluated against the declared tier. A scored IDS that substantially diverges from the declared tier flags for review (either the declared tier was wrong, or the work needs different bundling).
+
+- **High** (target IDS 7-10): architecture, governance primitive, multi-concept bundle, new R-rule.
+- **Medium** (target IDS 4-6): substantive feature work, refactor with context, well-scoped functional change.
+- **Low** (target IDS 1-3): mechanical fix, dependency bump, security patch, revert, typo correction.
+
+Tier ranges are non-overlapping; boundary values belong to the higher tier as written above. The tier ranges are an author-declaration framework for classifying intended scope, not a scoring formula. R-IDS-1's "no hard-coded thresholds" applies to the score itself (the automated reviewer's output is the metric, derived from no formula or weights). R-IDS-2's ranges apply to comparison context (which class of work the PR claims to represent), so reviewers can flag declared-tier vs scored-IDS divergence.
+
+This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
+
 ---
 
 ## Validation
@@ -166,7 +176,7 @@ When making changes, verify the rules that apply to your diff:
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
 | external `<a>` tags on public HTML | R-EXTERNAL-1 |
-| any PR | R-IDS-1 |
+| any PR | R-IDS-1, R-IDS-2 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
