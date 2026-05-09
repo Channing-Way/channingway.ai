@@ -68,19 +68,7 @@ These rules apply to all public-facing text: page copy, PR descriptions, commit 
 
 Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
 
-**R-PARTNERS-1 — partner relationships are publicly visible and credited.** Partners that may be openly named in repo files, PR descriptions, deployment configs, and Substack:
-
-- Minimus: hardened-image substrate / MinimOS Node base
-- Cloudflare: Workers and WAF
-- Anthropic: claude as substrate, agent runtime, primary frontier model partner
-- xAI: frontier model provider, agent runtime
-- Nous Research: frontier model and Hermes agentic harness
-- OpenRouter: multi-model routing for cross-provider evaluation
-- Tailscale: secure mesh VPN, private network access across devices
-- Discord: Vel deploys through Discord
-- Wispr Flow: voice-first capture
-
-Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. But the partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
+**R-PARTNERS-1 — partner relationships are publicly visible and credited.** Partners may be openly named in repo files, PR descriptions, deployment configs, and Substack. Presence in Dockerfile `FROM` lines, GitHub Action references, dependency manifests, or deployment configs is sufficient grounds to name that partner and describe its visible role; an enumerated master list is not required. Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. The partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
 
 ---
 
