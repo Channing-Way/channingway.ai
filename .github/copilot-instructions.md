@@ -137,6 +137,12 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 ---
 
+## External links
+
+**R-EXTERNAL-1 — external `<a>` tags on public surfaces include `target="_blank" rel="noopener noreferrer"`.** Internal links remain unchanged. This prevents context loss and accidental navigation away from channingway.ai when visitors follow social, upstream, or reference surfaces. *(Origin: PR #83.)*
+
+---
+
 ## Validation
 
 When making changes, verify the rules that apply to your diff:
@@ -147,6 +153,7 @@ When making changes, verify the rules that apply to your diff:
 | HTML or sitemap URLs | R-URL-1, R-SCHEMA-1 |
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
+| external `<a>` tags on public HTML | R-EXTERNAL-1 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
