@@ -159,7 +159,9 @@ The substantive output of the automated reviewer (score and reasoning) IS the me
 - **Medium** (target IDS 4-6): substantive feature work, refactor with context, well-scoped functional change.
 - **Low** (target IDS 1-3): mechanical fix, dependency bump, security patch, revert, typo correction.
 
-Tier ranges are non-overlapping; boundary values belong to the higher tier as written above. This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
+Tier ranges are non-overlapping; boundary values belong to the higher tier as written above. The tier ranges are an author-declaration framework for classifying intended scope, not a scoring formula. R-IDS-1's "no hard-coded thresholds" applies to the score itself (the automated reviewer's output is the metric, derived from no formula or weights). R-IDS-2's ranges apply to comparison context (which class of work the PR claims to represent), so reviewers can flag declared-tier vs scored-IDS divergence.
+
+This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
 
 ---
 
