@@ -139,7 +139,7 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 ## External links
 
-**R-EXTERNAL-1 — external `<a>` tags on public surfaces include `target="_blank" rel="noopener noreferrer"`.** Internal links remain unchanged. This prevents context loss and accidental navigation away from channingway.ai when visitors follow social, upstream, or reference surfaces. *(Origin: PR #83.)*
+**R-EXTERNAL-1 — external `<a>` tags on public surfaces include `target="_blank" rel="noopener noreferrer"` AND an accessibility hint indicating the link opens in a new tab (`aria-label` ending with `(opens in new tab)`, visible `↗` glyph, or visually-hidden span).** Internal links remain unchanged. This prevents context loss and accidental navigation away from channingway.ai when visitors follow social, upstream, or reference surfaces, and gives screen-reader users equal warning of the new-tab behavior. *(Origin: PR #83.)*
 
 ---
 
@@ -164,6 +164,8 @@ For visual changes, also inspect the rendered page or Cloudflare preview.
 ## Pull requests
 
 Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, branch name, commit subject, and PR body must describe the same intent.
+
+**Reviewer @-mention.** Automated PR reviewers (Copilot Coding Agent, `copilot-pull-request-reviewer[bot]`, and any other connected review bots) should `@channingway-agent` in inline review comments and review summaries so the agent identity receives notification and can respond inline. *(Origin: PR #83.)*
 
 Branch protection, signing, merge authorization, and auth boundaries live in [`CONTRIBUTING.md`](../CONTRIBUTING.md). Those gates are not actionable for an agent making code changes; they apply to the human operator and the PR-creation pipeline.
 
