@@ -28,7 +28,7 @@ Rules below are numbered so review comments can cite them directly (e.g., "viola
 
 **R-BOUNDARY-1 — never add or suggest:** secrets, tokens, credentials, or private URLs. *(Origin: PR #28.)*
 
-**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details of the private orchestration method (routing logic, scoring rubrics, agent-coordination patterns, behavioral-observation IP). Naming partners and the substantive role each plays in the visible stack (for example, "agent runtime", "mesh VPN", "frontier model provider") is permitted under R-PARTNERS-1; that is not a violation of this rule. *(Origin: PR #28.)*
+**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details of the private orchestration method (routing logic, model-selection logic, scoring rubrics, agent-coordination patterns, prompt or memory schemas, behavioral-observation IP, evaluation methods). Naming partners and the substantive role each plays in the visible stack (for example, "agent runtime", "mesh VPN", "frontier model provider") is permitted under R-PARTNERS-1; that is not a violation of this rule. *(Origin: PR #28.)*
 
 **R-BOUNDARY-3 — never add or suggest:** client context, private/non-consensual/safety-relevant/unnecessary PII, or private-method language. *(Origin: PR #28.)*
 
@@ -37,6 +37,8 @@ Rules below are numbered so review comments can cite them directly (e.g., "viola
 **R-BOUNDARY-5 — never add or suggest:** third-person personal references to the founder by first name. *(Origin: PR #38.)*
 
 **R-BOUNDARY-6 — do not explain how the private orchestration method works.** Already-public professional identifiers may remain when they are intentionally part of the public entity graph. *(Origin: PR #28.)*
+
+**R-BOUNDARY-7 — do not add logs, stack traces, prompt templates, sample prompts, transcripts, or screenshots that reveal private system behavior.** Debug and trace material belongs in private repos.
 
 **Public copy may say:** Channing Way; frontier-model orchestration; high-variance work; API; POC.
 
@@ -68,7 +70,7 @@ These rules apply to all public-facing text: page copy, PR descriptions, commit 
 
 Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
 
-**R-PARTNERS-1 — partner relationships are publicly visible and credited.** Partners may be openly named in repo files, PR descriptions, deployment configs, and Substack. Presence in Dockerfile `FROM` lines, GitHub Action references, dependency manifests, or deployment configs is sufficient grounds to name that partner and describe its visible role; an enumerated master list is not required. Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. The partner relationship itself is publicly credited. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
+**R-PARTNERS-1 — partner relationships are publicly visible and credited.** You may name any partner that is present in code, configuration, build artifacts, public logs, or active deployment outputs. Use accurate generic role labels only; for example: agent runtime, frontier model provider, mesh VPN, WAF, voice capture. Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. When a partner is removed from active use, remove its credit in the next PR. Do not publish partner ticket URLs, private support addresses, contract identifiers, or non-public codenames. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
 
 ---
 
@@ -144,7 +146,7 @@ When making changes, verify the rules that apply to your diff:
 | any visible HTML/text | R-COPY-1 .. R-COPY-4 (also enforced by `register-lint`) |
 | HTML or sitemap URLs | R-URL-1, R-SCHEMA-1 |
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
-| any public copy | R-BOUNDARY-1 .. R-BOUNDARY-6, R-STYLE-1 |
+| any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
