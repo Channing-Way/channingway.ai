@@ -153,13 +153,13 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 The substantive output of the automated reviewer (score and reasoning) IS the metric. No formula, no weights, no hard-coded thresholds; the metric drifts forward with the substrate. *(Origin: PR #83.)*
 
-**R-IDS-2 — every PR declares an Information Density target tier (high, medium, or low) in the PR template.** The IDS is evaluated against the declared tier. A scored IDS that substantially diverges from the declared tier flags for review (either the declared tier was wrong, or the work needs different bundling).
+**R-IDS-2 — every PR declares exactly one Information Density target tier (high, medium, or low) in the PR template.** The IDS is evaluated against the declared tier. A scored IDS that substantially diverges from the declared tier flags for review (either the declared tier was wrong, or the work needs different bundling).
 
 - **High** (target IDS 7-10): architecture, governance primitive, multi-concept bundle, new R-rule.
-- **Medium** (target IDS 4-7): substantive feature work, refactor with context, well-scoped functional change.
-- **Low** (target IDS 1-4): mechanical fix, dependency bump, security patch, revert, typo correction.
+- **Medium** (target IDS 4-6): substantive feature work, refactor with context, well-scoped functional change.
+- **Low** (target IDS 1-3): mechanical fix, dependency bump, security patch, revert, typo correction.
 
-This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
+Tier ranges are non-overlapping; boundary values belong to the higher tier as written above. This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
 
 ---
 

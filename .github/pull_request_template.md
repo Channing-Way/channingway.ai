@@ -71,11 +71,11 @@ This PR's substantive density is graded by an automated reviewer using the R-IDS
 
 ## Information density target (R-IDS-2)
 
-Declare the target tier for this PR. The automated reviewer's IDS is evaluated against the declaration; substantial divergence flags for review.
+Declare the target tier for this PR. **Select exactly one.** The automated reviewer's IDS is evaluated against the declaration; substantial divergence flags for review.
 
 - [ ] **High** (target IDS 7-10): architecture, governance primitive, multi-concept bundle, new R-rule.
-- [ ] **Medium** (target IDS 4-7): substantive feature work, refactor with context, well-scoped functional change.
-- [ ] **Low** (target IDS 1-4): mechanical fix, dependency bump, security patch, revert, typo correction.
+- [ ] **Medium** (target IDS 4-6): substantive feature work, refactor with context, well-scoped functional change.
+- [ ] **Low** (target IDS 1-3): mechanical fix, dependency bump, security patch, revert, typo correction.
 
 ## Visual / copy review
 
