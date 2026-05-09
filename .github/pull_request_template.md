@@ -65,9 +65,9 @@ Reviewers:
 
 ## Information density score (IDS)
 
-This PR's substantive density is graded by latest Grok via MCP using the IDS criteria in `.github/copilot-instructions.md`. The score itself is the metric; no formula, no weights, no hard-coded thresholds.
+This PR's substantive density is graded by an automated reviewer using the R-IDS-1 criteria in `.github/copilot-instructions.md`. The score itself is the metric; no formula, no weights, no hard-coded thresholds.
 
-- [ ] IDS calculated by latest Grok and posted as a comment on this PR.
+- [ ] IDS calculated by an automated reviewer and posted as a comment on this PR.
 
 ## Visual / copy review
 

@@ -143,6 +143,18 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 ---
 
+## Information density score (IDS)
+
+**R-IDS-1 — every PR is graded on a 0-10 Information Density Score (IDS) by an automated reviewer.** IDS measures architectural substance per unit of diff. Volume is not the measure; density is. The reviewer evaluates three dimensions:
+
+- **Novelty**: how much new, actionable, high-leverage understanding, decision quality, or future capability the PR adds.
+- **Compression**: signal-to-noise ratio per line. High when each line carries substantive content. Low when boilerplate, template text, or repeated verification ceremony fills the diff.
+- **Impact**: how much review effort would be required to extract the same value manually. High when the PR introduces a new governance primitive, architecture, or cross-cutting policy. Low when purely mechanical.
+
+The substantive output of the automated reviewer (score and reasoning) IS the metric. No formula, no weights, no hard-coded thresholds; the metric drifts forward with the substrate. *(Origin: PR #83.)*
+
+---
+
 ## Validation
 
 When making changes, verify the rules that apply to your diff:
@@ -154,6 +166,7 @@ When making changes, verify the rules that apply to your diff:
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
 | external `<a>` tags on public HTML | R-EXTERNAL-1 |
+| any PR | R-IDS-1 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
