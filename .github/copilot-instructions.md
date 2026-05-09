@@ -137,6 +137,24 @@ Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, int
 
 ---
 
+## External links
+
+**R-EXTERNAL-1 — external `<a>` tags on public surfaces include `target="_blank" rel="noopener noreferrer"` AND an accessibility hint indicating the link opens in a new tab (`aria-label` ending with `(opens in new tab)`, visible `↗` glyph, or visually-hidden span).** Internal links remain unchanged. This prevents context loss and accidental navigation away from channingway.ai when visitors follow social, upstream, or reference surfaces, and gives screen-reader users equal warning of the new-tab behavior. *(Origin: PR #83.)*
+
+---
+
+## Information density score (IDS)
+
+**R-IDS-1 — every PR is graded on a 0-10 Information Density Score (IDS) by an automated reviewer.** IDS measures architectural substance per unit of diff. Volume is not the measure; density is. The reviewer evaluates three dimensions:
+
+- **Novelty**: how much new, actionable, high-leverage understanding, decision quality, or future capability the PR adds.
+- **Compression**: signal-to-noise ratio per line. High when each line carries substantive content. Low when boilerplate, template text, or repeated verification ceremony fills the diff.
+- **Impact**: how much review effort would be required to extract the same value manually. High when the PR introduces a new governance primitive, architecture, or cross-cutting policy. Low when purely mechanical.
+
+The substantive output of the automated reviewer (score and reasoning) IS the metric. No formula, no weights, no hard-coded thresholds; the metric drifts forward with the substrate. *(Origin: PR #83.)*
+
+---
+
 ## Validation
 
 When making changes, verify the rules that apply to your diff:
@@ -147,6 +165,8 @@ When making changes, verify the rules that apply to your diff:
 | HTML or sitemap URLs | R-URL-1, R-SCHEMA-1 |
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
+| external `<a>` tags on public HTML | R-EXTERNAL-1 |
+| any PR | R-IDS-1 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
@@ -157,6 +177,8 @@ For visual changes, also inspect the rendered page or Cloudflare preview.
 ## Pull requests
 
 Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, branch name, commit subject, and PR body must describe the same intent.
+
+**Reviewer @-mention.** Automated PR reviewers (Copilot Coding Agent, `copilot-pull-request-reviewer[bot]`, and any other connected review bots) should `@channingway-agent` in inline review comments and review summaries so the agent identity receives notification and can respond inline. *(Origin: PR #83.)*
 
 Branch protection, signing, merge authorization, and auth boundaries live in [`CONTRIBUTING.md`](../CONTRIBUTING.md). Those gates are not actionable for an agent making code changes; they apply to the human operator and the PR-creation pipeline.
 

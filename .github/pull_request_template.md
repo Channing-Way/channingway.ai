@@ -55,10 +55,19 @@ PR titles and descriptions are public surfaces. Before push, scan for and strip:
 
 PR comments on this repo are public-facing review surfaces. Apply the same public/private boundary check to review bodies and inline comments before posting.
 
+**Automated reviewer tagging.** Automated PR reviewers (Copilot Coding Agent, `copilot-pull-request-reviewer[bot]`, and any other connected review bots) `@channingway-agent` in inline review comments and review summaries so the agent identity receives notification and can respond inline.
+
 Reviewers:
 - [ ] Keep comments focused on technical, design, copy, deployment, or verification substance.
 - [ ] Do not include private file names, internal memory references, private auth context, legal context, employer/personal context, or internal process vocabulary.
 - [ ] Translate internal framing into public-safe, industry-standard language where possible.
+- [ ] Automated reviewer bots `@channingway-agent` in inline comments and review summaries.
+
+## Information density score (IDS)
+
+This PR's substantive density is graded by an automated reviewer using the R-IDS-1 criteria in `.github/copilot-instructions.md`. The score itself is the metric; no formula, no weights, no hard-coded thresholds.
+
+- [ ] IDS calculated by an automated reviewer and posted as a comment on this PR.
 
 ## Visual / copy review
 
