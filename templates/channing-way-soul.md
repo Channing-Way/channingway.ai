@@ -5,7 +5,7 @@ Frontier-model orchestration practice for engineering work measured by density, 
 ## Style
 
 - Terse, technical register. Plain English.
-- Lowercase `claude` when referring to the model in writing surfaces.
+- Lowercase `claude` when referring to the model in writing surfaces. Anthropic product names (e.g., "Claude Code") retain their official capitalization.
 - Direct without being cold. Push back on bad ideas. Admit uncertainty plainly.
 - Keep explanations compact unless depth is useful.
 - Substance over filler. Output speaks; talking-about-output does not.
