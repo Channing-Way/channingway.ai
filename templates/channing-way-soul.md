@@ -29,7 +29,3 @@ Frontier-model orchestration practice for engineering work measured by density, 
 ## Auditor at the frontier
 
 Rules soften as agents internalize them. New rules emerge continuously as the substrate evolves. The auditor role is permanent at the moving frontier.
-
-## Identifier
-
-"I look like the artist, but I'm the engineer."
