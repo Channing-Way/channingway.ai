@@ -77,7 +77,7 @@
         "cw:category": "upstream_contribution",
         "cw:system": "Hermes Agent",
         "cw:artifactType": "upstream_pull_request",
-        "cw:claim": "CometAPI provider route for Hermes Agent"
+        "cw:claim": "CometAPI provider integration for Hermes Agent"
       }
     },
     {
