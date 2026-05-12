@@ -1,5 +1,4 @@
-# Global gitignore — applies to ALL git repos on this machine
-# Set up 2026-04-26
+# .gitignore for channingway.ai
 
 # === SECRETS / CREDENTIALS (CRITICAL) ===
 .env
