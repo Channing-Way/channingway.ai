@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POC · Channing Way</title>
-<meta name="description" content="Public proof of concept for Channing Way.">
-
-<!-- Open Graph -->
-<meta property="og:title" content="POC · Channing Way">
-<meta property="og:description" content="Public proof of concept for Channing Way.">
-<link rel="canonical" href="https://channingway.ai/poc">
-<meta property="og:url" content="https://channingway.ai/poc">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Channing Way">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://channingway.ai/apple-touch-icon.png">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="POC · Channing Way">
-<meta name="twitter:description" content="Public proof of concept for Channing Way.">
-<meta name="twitter:image" content="https://channingway.ai/apple-touch-icon.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/style.css">
-<script type="application/ld+json">
 {
   "@context": {
     "@vocab": "https://schema.org/",
@@ -124,33 +96,3 @@
     }
   ]
 }
-</script>
-</head>
-<body>
-<main>
-  <h1>POC</h1>
-
-  <p class="gray small">Machine-readable receipts: <code><a href="/api/poc.json">/api/poc.json</a></code></p>
-
-  <h2>Reports filed</h2>
-  <ul>
-    <li><a href="https://github.com/anthropics/claude-code/issues/50554" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#50554 (opens in new tab)">anthropics/claude-code#50554</a><span class="gray small">: Structural Claude Code failure identified upstream</span></li>
-    <li><a href="https://github.com/anthropics/claude-code/issues/53603" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#53603 (opens in new tab)">anthropics/claude-code#53603</a><span class="gray small">: Privacy/security issue family</span></li>
-    <li><a href="https://github.com/anthropics/claude-code/issues/54021" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#54021 (opens in new tab)">anthropics/claude-code#54021</a><span class="gray small">: Image-ingestion and compaction failure</span></li>
-  </ul>
-
-  <h2>Upstream contributions</h2>
-  <ul>
-    <li><a href="https://github.com/cloudflare/workers-sdk/discussions/13823" target="_blank" rel="noopener noreferrer" aria-label="cloudflare/workers-sdk#13823 (opens in new tab)">cloudflare/workers-sdk#13823</a><span class="gray small">: feature-request discussion for user-settable workers/triggered_by annotation</span></li>
-    <li><a href="https://github.com/NousResearch/hermes-agent/pull/18550" target="_blank" rel="noopener noreferrer" aria-label="NousResearch/hermes-agent#18550 (opens in new tab)">NousResearch/hermes-agent#18550</a><span class="gray small">: CometAPI provider route for Hermes Agent</span></li>
-  </ul>
-
-  <h2>Publications</h2>
-  <ul>
-    <li><a href="https://doi.org/10.1016/j.ijmecsci.2008.02.011" target="_blank" rel="noopener noreferrer" aria-label="IJMS 2008 (opens in new tab)">IJMS 2008</a><span class="gray small">: numerical method for tensionless contact in continuum mechanics via boundary integral equations</span></li>
-  </ul>
-
-  <p><a href="/">← home</a></p>
-</main>
-</body>
-</html>
