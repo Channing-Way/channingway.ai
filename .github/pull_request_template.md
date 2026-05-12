@@ -28,9 +28,7 @@ Type:
 
 ## Public/private boundary
 
-- [ ] No secrets, tokens, private URLs, client context, legal context, or internal memory paths.
-- [ ] No private-method language unless explicitly approved for this PR.
-- [ ] No unnecessary implementation details beyond the public surface being changed.
+- [ ] No secrets, private context, or implementation details beyond the public surface being changed (R-BOUNDARY-1..7 per `.github/copilot-instructions.md`).
 
 ## NO_REPLY check
 
@@ -46,10 +44,7 @@ PR titles and descriptions are public surfaces. Before push, scan for and strip:
 
 ## Copy register
 
-- [ ] R-COPY-1 (em-dash check) verified per `.github/copilot-instructions.md`.
-- [ ] R-COPY-2 (forbidden register-tics) verified per `.github/copilot-instructions.md`.
-- [ ] R-COPY-3 (canonical technical vocabulary) verified per `.github/copilot-instructions.md`.
-- [ ] R-COPY-4 (no fixed-year establishment claim in visible chrome) verified per `.github/copilot-instructions.md`.
+- [ ] R-COPY-1..4 verified per `.github/copilot-instructions.md` (em-dashes, register-tics, canonical vocabulary, no fixed-year claim).
 
 ## Review-comment discipline
 
@@ -95,6 +90,3 @@ Acceptable merge authorization:
 - Formal approval review on the latest commit with merge intent
 
 Emoji reactions and off-platform messages are acknowledgements only, not merge authorization.
-
-Authored by: <!-- agent / human -->
-Opened via: <!-- Aether / human -->
