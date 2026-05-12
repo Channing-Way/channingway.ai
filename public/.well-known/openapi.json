@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Channing Way API",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "Read-only endpoints describing Channing Way's public state."
   },
   "servers": [
@@ -23,6 +23,24 @@
               "application/ld+json": {
                 "schema": {
                   "$ref": "#/components/schemas/OrganizationManifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/poc.json": {
+      "get": {
+        "summary": "Public POC receipts",
+        "description": "Returns machine-readable public proof of concept receipts as a JSON-LD ItemList.",
+        "responses": {
+          "200": {
+            "description": "JSON-LD ItemList of public proof of concept receipts",
+            "content": {
+              "application/ld+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PocReceiptList"
                 }
               }
             }
@@ -133,6 +151,118 @@
           "address",
           "founder",
           "sameAs"
+        ]
+      },
+      "PocReceiptList": {
+        "type": "object",
+        "description": "Schema.org ItemList describing public proof of concept receipts. Custom cw:* properties classify each receipt for agent extraction.",
+        "properties": {
+          "@context": {
+            "type": "object"
+          },
+          "@type": {
+            "type": "string",
+            "const": "ItemList"
+          },
+          "@id": {
+            "type": "string",
+            "format": "uri"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "numberOfItems": {
+            "type": "integer"
+          },
+          "itemListElement": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PocReceiptListItem"
+            }
+          }
+        },
+        "required": [
+          "@context",
+          "@type",
+          "@id",
+          "name",
+          "description",
+          "url",
+          "numberOfItems",
+          "itemListElement"
+        ]
+      },
+      "PocReceiptListItem": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string",
+            "const": "ListItem"
+          },
+          "position": {
+            "type": "integer"
+          },
+          "item": {
+            "$ref": "#/components/schemas/PocReceipt"
+          }
+        },
+        "required": [
+          "@type",
+          "position",
+          "item"
+        ]
+      },
+      "PocReceipt": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string"
+          },
+          "@id": {
+            "type": "string",
+            "format": "uri"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "cw:category": {
+            "type": "string",
+            "enum": [
+              "report_filed",
+              "upstream_contribution",
+              "publication"
+            ]
+          },
+          "cw:system": {
+            "type": "string"
+          },
+          "cw:artifactType": {
+            "type": "string"
+          },
+          "cw:claim": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "@type",
+          "@id",
+          "name",
+          "url",
+          "cw:category",
+          "cw:system",
+          "cw:artifactType",
+          "cw:claim"
         ]
       },
       "HealthStatus": {

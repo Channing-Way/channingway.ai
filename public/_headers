@@ -4,3 +4,6 @@
 
 /api/manifest.json
   Content-Type: application/ld+json; charset=utf-8
+
+/api/poc.json
+  Content-Type: application/ld+json; charset=utf-8

@@ -107,6 +107,7 @@ Primary public files:
 Discovery and metadata:
 - `public/.well-known/openapi.json` (OpenAPI 3.1 spec for API endpoints)
 - `public/api/manifest.json` (Schema.org Organization JSON-LD)
+- `public/api/poc.json` (Schema.org ItemList JSON-LD for public POC receipts)
 - `public/api/health.json` (static public-status document)
 - `public/_headers` (Cloudflare Workers Content-Type overrides)
 
