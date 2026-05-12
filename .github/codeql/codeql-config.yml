@@ -1,0 +1,15 @@
+name: "Channing Way CodeQL config"
+
+# Query pack selection.
+# security-extended adds security queries beyond the default code-scanning pack.
+# security-and-quality also includes maintainability queries that can be noisy at this scale.
+queries:
+  - uses: security-extended
+
+# Excluded paths (vendored / binary assets).
+# CodeQL does not analyze binaries; the explicit exclusion documents intent.
+paths-ignore:
+  - public/fonts/**
+  - public/favicon*.png
+  - public/favicon.ico
+  - public/apple-touch-icon.png
