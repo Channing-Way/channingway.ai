@@ -28,7 +28,7 @@ Rules below are numbered so review comments can cite them directly (e.g., "viola
 
 **R-BOUNDARY-1 — never add or suggest:** secrets, tokens, credentials, or private URLs. *(Origin: PR #28.)*
 
-**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details of the private orchestration method (routing logic, model-selection logic, scoring rubrics, agent-coordination patterns, prompt or memory schemas, behavioral-observation IP, evaluation methods). Naming partners and the substantive role each plays in the visible stack (for example, "agent runtime", "mesh VPN", "frontier model provider") is permitted under R-PARTNERS-1; that is not a violation of this rule. *(Origin: PR #28.)*
+**R-BOUNDARY-2 — never add or suggest:** private repository names, internal memory paths, or implementation details of the private orchestration method (routing logic, model-selection logic, scoring rubrics, agent-coordination patterns, prompt or memory schemas, behavioral-observation IP, evaluation methods). Naming partners and the substantive role each plays in the visible stack (for example, "agent runtime", "mesh VPN", "frontier model provider") is permitted under R-PARTNERS-1; that is not a violation of this rule. Publicly attributable contribution identifiers and concise receipt metadata for public third-party surfaces (issues filed, PRs opened, comments or reviews left, talks given, papers published) are not operational provenance merely because they prove substantive work occurred. The boundary is crossed when the local public surface discloses HOW the private substrate operates, including routing logic, model selection, scoring rubrics, prompt or memory schemas, agent coordination patterns, evaluation methods, prompt templates, sample prompts, stack traces, transcripts, screenshots, internal paths, private repository names, client context, secrets, legal matters or intellectual property, or other private-method implementation detail, whether stated directly or by summarizing private details from the linked artifact. Enumeration is permitted under R-PARTNERS-1 and R-CREDENTIALS-1 when the local public surface only names the existence and nature of the public contribution using stable identifiers and accurate partner/product names. *(Origin: PR #28; clarification clause added in PR #96.)*
 
 **R-BOUNDARY-3 — never add or suggest:** client context, private/non-consensual/safety-relevant/unnecessary PII, or private-method language. *(Origin: PR #28.)*
 
@@ -71,6 +71,14 @@ These rules apply to all public-facing text: page copy, PR descriptions, commit 
 Partner relationships and stack composition are intentionally visible. Channing Way operates infrastructure through credited partners; the architecture depends on this visibility.
 
 **R-PARTNERS-1 — partner relationships are publicly visible and credited.** You may name any partner that is present in code, configuration, build artifacts, public logs, or active deployment outputs. Use accurate generic role labels only; for example: agent runtime, frontier model provider, mesh VPN, WAF, voice capture. Do not recommend stripping partner references from public surfaces. Do not flag partner-name disclosure as a privacy or security issue. Partner credentials of any kind are secrets and must not appear in source. When a partner is removed from active use, remove its credit in the next PR. Do not publish partner ticket URLs, private support addresses, contract identifiers, or non-public codenames. Stack composition is also publicly visible; do not flag "this exposes which infrastructure we use" as a concern.
+
+---
+
+## Public credential surfaces
+
+Public substantive contributions on third-party surfaces (issues filed, PRs opened, comments or reviews left, talks given, papers published) function as credential receipts and may be enumerated on public credential surfaces (POC receipts, identity graph, README, llms.txt). These are bounded by R-BOUNDARY-1 through R-BOUNDARY-7 but not subsumed by them.
+
+**R-CREDENTIALS-1 — public substantive contributions are credential receipts.** Publicly attributable issues filed, pull requests opened, comments or reviews left on public repositories, talks given, papers published, and other verifiable public records of substantive technical work MAY be enumerated on public credential surfaces (POC receipts, identity graph, README, llms.txt). Enumeration should use stable public identifiers, canonical URLs, accurate partner/product names, artifact type, and concise claims. Do not copy or summarize private-method details, logs, stack traces, transcripts, screenshots, prompt templates, sample prompts, prompt or memory schemas, internal paths, private repository names, client context, secrets, legal matters or intellectual property, or accidental disclosures from the linked artifact. If a linked receipt later becomes unavailable, redacted by the host, or discovered to contain sensitive material, update, redact, or remove the local enumeration accordingly. R-CREDENTIALS-1 composes with R-PARTNERS-1 (partner identification, permitted; see R-PARTNERS-1 for constraints on partner and product naming) and remains bounded by R-BOUNDARY-1 through R-BOUNDARY-7 (private-substrate protection). *(Origin: PR #96.)*
 
 ---
 
@@ -179,6 +187,7 @@ When making changes, verify the rules that apply to your diff:
 | external `<a>` tags on public HTML | R-EXTERNAL-1 |
 | any PR | R-IDS-1, R-IDS-2 |
 | repo files naming partners or stack | R-PARTNERS-1 |
+| POC receipts or public credential metadata | R-CREDENTIALS-1, R-PARTNERS-1, R-BOUNDARY-1 .. R-BOUNDARY-7, R-SCHEMA-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
 
 For visual changes, also inspect the rendered page or Cloudflare preview.

@@ -36,25 +36,53 @@
   "name": "Channing Way POC receipts",
   "description": "Machine-readable public proof of concept receipts for Channing Way.",
   "url": "https://channingway.ai/poc",
-  "numberOfItems": 4,
+  "numberOfItems": 6,
   "itemListElement": [
     {
       "@type": "ListItem",
       "position": 1,
       "item": {
         "@type": "CreativeWork",
-        "@id": "https://channingway.ai/api/poc.json#upstream-bug-reports",
-        "name": "Upstream bug reports",
-        "url": "https://channingway.ai/poc#reports-filed",
+        "@id": "https://github.com/anthropics/claude-code/issues/50554",
+        "name": "anthropics/claude-code#50554",
+        "url": "https://github.com/anthropics/claude-code/issues/50554",
         "cw:category": "report_filed",
-        "cw:system": "agent runtime",
-        "cw:artifactType": "upstream_reports",
-        "cw:claim": "Three upstream product issues filed from public reproduction work"
+        "cw:system": "Claude Code",
+        "cw:artifactType": "upstream_issue",
+        "cw:claim": "Structural Claude Code failure identified upstream"
       }
     },
     {
       "@type": "ListItem",
       "position": 2,
+      "item": {
+        "@type": "CreativeWork",
+        "@id": "https://github.com/anthropics/claude-code/issues/53603",
+        "name": "anthropics/claude-code#53603",
+        "url": "https://github.com/anthropics/claude-code/issues/53603",
+        "cw:category": "report_filed",
+        "cw:system": "Claude Code",
+        "cw:artifactType": "upstream_issue",
+        "cw:claim": "Privacy/security issue family"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "CreativeWork",
+        "@id": "https://github.com/anthropics/claude-code/issues/54021",
+        "name": "anthropics/claude-code#54021",
+        "url": "https://github.com/anthropics/claude-code/issues/54021",
+        "cw:category": "report_filed",
+        "cw:system": "Claude Code",
+        "cw:artifactType": "upstream_issue",
+        "cw:claim": "Image-ingestion and compaction failure"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
       "item": {
         "@type": "CreativeWork",
         "@id": "https://github.com/cloudflare/workers-sdk/discussions/13823",
@@ -68,7 +96,7 @@
     },
     {
       "@type": "ListItem",
-      "position": 3,
+      "position": 5,
       "item": {
         "@type": "SoftwareSourceCode",
         "@id": "https://github.com/NousResearch/hermes-agent/pull/18550",
@@ -82,7 +110,7 @@
     },
     {
       "@type": "ListItem",
-      "position": 4,
+      "position": 6,
       "item": {
         "@type": "ScholarlyArticle",
         "@id": "https://doi.org/10.1016/j.ijmecsci.2008.02.011",
@@ -104,9 +132,11 @@
 
   <p class="gray small">Machine-readable receipts: <code><a href="/api/poc.json">/api/poc.json</a></code></p>
 
-  <h2 id="reports-filed">Reports filed</h2>
+  <h2>Reports filed</h2>
   <ul>
-    <li>Three upstream product issues filed from public reproduction work</li>
+    <li><a href="https://github.com/anthropics/claude-code/issues/50554" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#50554 (opens in new tab)">anthropics/claude-code#50554</a><span class="gray small">: Structural Claude Code failure identified upstream</span></li>
+    <li><a href="https://github.com/anthropics/claude-code/issues/53603" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#53603 (opens in new tab)">anthropics/claude-code#53603</a><span class="gray small">: Privacy/security issue family</span></li>
+    <li><a href="https://github.com/anthropics/claude-code/issues/54021" target="_blank" rel="noopener noreferrer" aria-label="anthropics/claude-code#54021 (opens in new tab)">anthropics/claude-code#54021</a><span class="gray small">: Image-ingestion and compaction failure</span></li>
   </ul>
 
   <h2>Upstream contributions</h2>
