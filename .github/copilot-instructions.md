@@ -125,11 +125,13 @@ Deployment: Cloudflare Workers Static Assets; production deploys from `main`.
 
 ## URL canonicalization
 
-**R-URL-1 — public URLs are extensionless.** Cloudflare 307-redirects `.html`-suffixed URLs to extensionless equivalents:
-- `/api.html` 307 -> `/api`
-- `/poc.html` 307 -> `/poc`
+**R-URL-1 — public URLs are extensionless.** Explicit 301 redirects from `.html`-suffixed URLs to extensionless equivalents (configured in `public/_redirects`):
+- `/api.html` 301 -> `/api`
+- `/poc.html` 301 -> `/poc`
+- `/intake.html` 301 -> `/intake`
+- `/index.html` 301 -> `/`
 
-Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, internal links) must use the extensionless form. Do not revert to `.html`-suffixed URLs. *(Origin: PR #38, after a noisy iteration on PR #35.)*
+Canonical references (sitemap, `og:url`, JSON-LD `@id`, OpenAPI server URLs, internal links) must use the extensionless form. Do not revert to `.html`-suffixed URLs. *(Origin: PR #38, after a noisy iteration on PR #35; revised in PR #98 to explicit 301s and full extensionless coverage.)*
 
 ---
 
