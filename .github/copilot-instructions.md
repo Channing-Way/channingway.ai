@@ -200,6 +200,16 @@ For visual changes, also inspect the rendered page or Cloudflare preview.
 
 Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, branch name, commit subject, and PR body must describe the same intent.
 
+**Public PR bodies stay concise.** Do not paste full boundary, copy-register, review-discipline, or NO_REPLY checklists into every PR body. Those rules live here and still apply. PR bodies should summarize the diff, verification, risk, IDS tier, and any public-safe notes needed for review.
+
+**PR self-audit before posting.** Before submitting or updating a PR title, body, commit message, issue comment, review summary, or inline review comment, agents must self-audit for:
+- R-BOUNDARY-1 through R-BOUNDARY-7
+- R-COPY-1 through R-COPY-4
+- R-IDS-1 and R-IDS-2
+- no internal forward-roadmap leaks, private process labels, private auth context, personal-history detail, legal context, raw secret values, or stale template text
+
+**Secrets in PR surfaces.** Agents may edit secret names, config references, workflow wiring, and documentation. Agents must not request, reveal, paste, store, screenshot, summarize, or commit raw secret values. Use provider secret stores and refer to secrets by name only.
+
 **Reviewer @-mention.** Automated PR reviewers (Copilot Coding Agent, `copilot-pull-request-reviewer[bot]`, and any other connected review bots) should `@channingway-agent` in inline review comments and review summaries so the agent identity receives notification and can respond inline. *(Origin: PR #83.)*
 
 Branch protection, signing, merge authorization, and auth boundaries live in [`CONTRIBUTING.md`](../CONTRIBUTING.md). Those gates are not actionable for an agent making code changes; they apply to the human operator and the PR-creation pipeline.
