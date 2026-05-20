@@ -11,7 +11,21 @@ jobs:
   resync:
     runs-on: ubuntu-latest
     steps:
+      - name: Check if staging has substantive divergence from main
+        id: divergence_check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          file_count=$(gh api "repos/${{ github.repository }}/compare/main...staging" --jq '.files | length')
+          echo "file_count=$file_count" >> "$GITHUB_OUTPUT"
+          if [ "$file_count" -gt 0 ]; then
+            echo "::notice::Staging has $file_count file(s) differing from main — substantive work in flight. Skipping resync."
+          else
+            echo "Staging file content matches main — safe to resync."
+          fi
+
       - name: Get main HEAD SHA
+        if: steps.divergence_check.outputs.file_count == '0'
         id: get_main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,6 +34,7 @@ jobs:
           echo "sha=$main_sha" >> "$GITHUB_OUTPUT"
 
       - name: Force-update staging ref to main
+        if: steps.divergence_check.outputs.file_count == '0'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
