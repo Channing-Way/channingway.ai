@@ -27,8 +27,9 @@ export default {
 };
 
 async function handleIntake(request, env) {
+  const requestUrl = new URL(request.url);
   const origin = request.headers.get('Origin') || '';
-  if (!ALLOWED_ORIGINS.includes(origin)) {
+  if (!isAllowedOrigin(origin, requestUrl.origin, env)) {
     return json({ error: 'Forbidden.' }, 403);
   }
 
@@ -109,6 +110,21 @@ async function handleIntake(request, env) {
   }
 
   return json({ error: 'Submission failed (status ' + resp.status + '). Email bethany@channingway.ai.' }, 502);
+}
+
+function isAllowedOrigin(origin, requestOrigin, env) {
+  if (!origin) {
+    return false;
+  }
+
+  const configuredOrigins = String(env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return origin === requestOrigin
+    || ALLOWED_ORIGINS.includes(origin)
+    || configuredOrigins.includes(origin);
 }
 
 function json(data, status) {

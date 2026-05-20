@@ -4,10 +4,25 @@ on:
   push:
     branches:
       - main
+      - staging
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Deploy target
+        required: true
+        type: choice
+        default: staging
+        options:
+          - staging
+          - production
 
 permissions:
   deployments: write
   contents: read
+
+concurrency:
+  group: deploy-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment || github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -21,6 +36,41 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Select deployment target
+        id: target
+        run: |
+          event_name="${{ github.event_name }}"
+          ref_name="${{ github.ref_name }}"
+          dispatch_environment="${{ github.event.inputs.environment || '' }}"
+
+          if [ "$event_name" = "workflow_dispatch" ]; then
+            deploy_env="$dispatch_environment"
+          elif [ "$ref_name" = "main" ]; then
+            deploy_env="production"
+          elif [ "$ref_name" = "staging" ]; then
+            deploy_env="staging"
+          else
+            echo "Unsupported deployment ref: $ref_name"
+            exit 1
+          fi
+
+          case "$deploy_env" in
+            production)
+              echo "deploy_env=production" >> "$GITHUB_OUTPUT"
+              echo "deployment_name=cloudflare-workers" >> "$GITHUB_OUTPUT"
+              echo "site_url=https://channingway.ai/" >> "$GITHUB_OUTPUT"
+              ;;
+            staging)
+              echo "deploy_env=staging" >> "$GITHUB_OUTPUT"
+              echo "deployment_name=cloudflare-workers-staging" >> "$GITHUB_OUTPUT"
+              echo "site_url=https://staging.channingway.ai/" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "Unsupported deployment environment: $deploy_env"
+              exit 1
+              ;;
+          esac
+
       - name: Extract commit subject + author for deploy message
         id: msg
         run: |
@@ -29,28 +79,54 @@ jobs:
           echo "subject=$subject" >> "$GITHUB_OUTPUT"
           echo "author=$author" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd  # v3.15.0
+      - name: Deploy to Cloudflare Workers production
+        if: steps.target.outputs.deploy_env == 'production'
+        id: deploy_production
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           wranglerVersion: 'latest'
-          command: deploy --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
+          command: deploy --env="" --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
+
+      - name: Deploy to Cloudflare Workers staging
+        if: steps.target.outputs.deploy_env == 'staging'
+        id: deploy_staging
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0  # v4.0.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: 'latest'
+          command: deploy --env staging --message "${{ steps.msg.outputs.subject }} (by ${{ steps.msg.outputs.author }})"
 
       - name: Wait for edge propagation
         run: sleep 30
 
-      - name: Verify live site
+      - name: Verify deployed site
         id: verify
+        env:
+          DEPLOY_ENV: ${{ steps.target.outputs.deploy_env }}
+          SITE_URL: ${{ steps.target.outputs.site_url }}
         run: |
+          site_url="$SITE_URL"
+
+          if [ -z "$site_url" ]; then
+            echo "result=failure" >> "$GITHUB_OUTPUT"
+            echo "Missing deployment URL for $DEPLOY_ENV"
+            exit 0
+          fi
+
+          site_url="${site_url%/}/"
           set +e
-          status=$(curl -s -o /tmp/page.html -w "%{http_code}" "https://channingway.ai/?nocache=$RANDOM")
+          status=$(curl -s -o /tmp/page.html -w "%{http_code}" "${site_url}?nocache=$RANDOM")
           if [ "$status" = "200" ] && grep -q "Channing Way" /tmp/page.html; then
             echo "result=success" >> "$GITHUB_OUTPUT"
-            echo "Verified: 200 + content present"
+            echo "url=$site_url" >> "$GITHUB_OUTPUT"
+            echo "Verified $DEPLOY_ENV: 200 + content present at $site_url"
           else
             echo "result=failure" >> "$GITHUB_OUTPUT"
-            echo "Verification failed: status=$status"
+            echo "url=$site_url" >> "$GITHUB_OUTPUT"
+            echo "Verification failed for $DEPLOY_ENV: status=$status url=$site_url"
           fi
 
       - name: Create deployment record
@@ -59,36 +135,61 @@ jobs:
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
           STATE: ${{ steps.verify.outputs.result }}
+          DEPLOY_ENV: ${{ steps.target.outputs.deploy_env }}
+          DEPLOYMENT_NAME: ${{ steps.target.outputs.deployment_name }}
+          ENVIRONMENT_URL: ${{ steps.verify.outputs.url }}
         run: |
+          deploy_payload=$(jq -n \
+            --arg ref "$SHA" \
+            --arg environment "$DEPLOYMENT_NAME" \
+            --arg description "Cloudflare Workers Static Assets ($DEPLOY_ENV) via wrangler-action" \
+            '{
+              ref: $ref,
+              environment: $environment,
+              required_contexts: [],
+              auto_merge: false,
+              description: $description
+            }')
+
           deploy_id=$(curl -s -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$REPO/deployments" \
-            -d "{
-              \"ref\": \"$SHA\",
-              \"environment\": \"cloudflare-workers\",
-              \"required_contexts\": [],
-              \"auto_merge\": false,
-              \"description\": \"Cloudflare Workers Static Assets via wrangler-action\"
-            }" | jq -r '.id')
+            -d "$deploy_payload" | jq -r '.id')
 
           if [ -z "$deploy_id" ] || [ "$deploy_id" = "null" ]; then
             echo "Failed to create deployment record"
             exit 1
           fi
 
+          if [ -n "$ENVIRONMENT_URL" ]; then
+            status_payload=$(jq -n \
+              --arg state "$STATE" \
+              --arg environment_url "$ENVIRONMENT_URL" \
+              --arg description "Verified: $STATE" \
+              '{
+                state: $state,
+                environment_url: $environment_url,
+                description: $description
+              }')
+          else
+            status_payload=$(jq -n \
+              --arg state "$STATE" \
+              --arg description "Verified: $STATE" \
+              '{
+                state: $state,
+                description: $description
+              }')
+          fi
+
           curl -s -X POST \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$REPO/deployments/$deploy_id/statuses" \
-            -d "{
-              \"state\": \"$STATE\",
-              \"environment_url\": \"https://channingway.ai/\",
-              \"description\": \"Verified: $STATE\"
-            }"
+            -d "$status_payload"
 
-      - name: Fail job if live-site verification failed
+      - name: Fail job if site verification failed
         if: steps.verify.outputs.result == 'failure'
         run: |
-          echo "Live site verification failed. See Verify live site step output."
+          echo "Site verification failed. See Verify deployed site step output."
           exit 1
