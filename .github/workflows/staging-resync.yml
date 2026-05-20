@@ -1,0 +1,28 @@
+name: Resync staging to main
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  resync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get main HEAD SHA
+        id: get_main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          main_sha=$(gh api "repos/${{ github.repository }}/branches/main" --jq '.commit.sha')
+          echo "sha=$main_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Force-update staging ref to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X PATCH "repos/${{ github.repository }}/git/refs/heads/staging" \
+            -f sha="${{ steps.get_main.outputs.sha }}" \
+            -F force=true
