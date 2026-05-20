@@ -174,6 +174,8 @@ Tier ranges are non-overlapping; boundary values belong to the higher tier as wr
 
 This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
 
+The [`PR body lint`](workflows/pr-body-lint.yml) workflow enforces the R-IDS-2 declaration by requiring exactly one checked tier in the PR body before merge.
+
 ---
 
 ## Validation
@@ -201,6 +203,8 @@ For visual changes, also inspect the rendered page or Cloudflare preview.
 Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, branch name, commit subject, and PR body must describe the same intent.
 
 **Public PR bodies stay concise.** Do not paste full boundary, copy-register, review-discipline, or NO_REPLY checklists into every PR body. Those rules live here and still apply. PR bodies should summarize the diff, verification, risk, IDS tier, and any public-safe notes needed for review.
+
+**Public PR comments stay bounded.** Review comments and PR replies should contain only decision-relevant review signal. Public IDS output should be limited to the final score, tier, one sentence of rationale, and whether the score matches the declared tier. Do not publish model rosters, ensemble tables, internal scoring machinery, prompt excerpts, raw model responses, tool invocation names, or meta-process traces unless Bethany explicitly approves that public disclosure for the specific PR.
 
 **PR self-audit before posting.** Before submitting or updating a PR title, body, commit message, issue comment, review summary, or inline review comment, agents must self-audit for:
 - R-BOUNDARY-1 through R-BOUNDARY-7
