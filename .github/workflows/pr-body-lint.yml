@@ -24,16 +24,31 @@ jobs:
           set -u
 
           body_file="$RUNNER_TEMP/pr-body.md"
-          jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH" > "$body_file"
+          ids_tier_file="$RUNNER_TEMP/pr-body-ids-tier.md"
+          jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH" | sed 's/\r$//' > "$body_file"
 
-          if ! grep -qi '^##[[:space:]]\+IDS tier[[:space:]]*$' "$body_file"; then
+          if ! grep -Eiq '^##[[:space:]]+IDS tier[[:space:]]*$' "$body_file"; then
             echo "::error::PR body must include the IDS tier section from the pull request template."
             exit 1
           fi
 
+          awk '
+            tolower($0) ~ /^##[[:space:]]+ids tier[[:space:]]*$/ {
+              in_section = 1
+              print
+              next
+            }
+            in_section && /^##[[:space:]]+/ {
+              exit
+            }
+            in_section {
+              print
+            }
+          ' "$body_file" > "$ids_tier_file"
+
           checked=0
           for tier in High Medium Low; do
-            if grep -Eiq "^[[:space:]]*-[[:space:]]*\\[[xX]\\][[:space:]]*$tier[[:space:]]*$" "$body_file"; then
+            if grep -Eiq "^[[:space:]]*-[[:space:]]*\\[[xX]\\][[:space:]]*$tier[[:space:]]*$" "$ids_tier_file"; then
               checked=$((checked + 1))
             fi
           done
