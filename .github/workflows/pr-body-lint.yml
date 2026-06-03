@@ -13,27 +13,53 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   pr-body-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Require exactly one IDS tier
+      - name: Lint PR body guardrails
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          set -u
+          set -euo pipefail
 
           body_file="$RUNNER_TEMP/pr-body.md"
           ids_tier_file="$RUNNER_TEMP/pr-body-ids-tier.md"
+          final_ids_file="$RUNNER_TEMP/pr-body-final-ids.md"
+          pr_metadata_file="$RUNNER_TEMP/pr-metadata.json"
           jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH" | sed 's/\r$//' > "$body_file"
 
-          if ! grep -Eiq '^##[[:space:]]+IDS tier[[:space:]]*$' "$body_file"; then
-            echo "::error::PR body must include the IDS tier section from the pull request template."
+          required_sections=(
+            "Summary"
+            "Verification"
+            "Risk"
+            "IDS tier"
+            "Final IDS score"
+            "Notes"
+            "Review gate"
+          )
+
+          for section in "${required_sections[@]}"; do
+            if ! grep -Eiq "^##[[:space:]]+$section[[:space:]]*$" "$body_file"; then
+              echo "::error::PR body must include the $section section from the pull request template."
+              exit 1
+            fi
+          done
+
+          if grep -Eiq '(^|[^[:alnum:]_])Bethany([^[:alnum:]_]|$)' "$body_file"; then
+            echo "::error::PR body must not include third-person first-name founder references."
             exit 1
           fi
 
-          awk '
-            tolower($0) ~ /^##[[:space:]]+ids tier[[:space:]]*$/ {
+          extract_section() {
+            local heading="$1"
+            local output_file="$2"
+
+            awk -v heading="$heading" '
+            tolower($0) ~ "^##[[:space:]]+" heading "[[:space:]]*$" {
               in_section = 1
               print
               next
@@ -44,7 +70,11 @@ jobs:
             in_section {
               print
             }
-          ' "$body_file" > "$ids_tier_file"
+          ' "$body_file" > "$output_file"
+          }
+
+          extract_section "ids tier" "$ids_tier_file"
+          extract_section "final ids score" "$final_ids_file"
 
           checked=0
           for tier in High Medium Low; do
@@ -58,4 +88,66 @@ jobs:
             exit 1
           fi
 
-          echo "PR body lint passed: exactly one IDS tier selected."
+          if ! grep -Eiq '^Score:[[:space:]]*(10([.]0+)?|[0-9]([.][0-9]+)?)(/10)?[[:space:]]*$' "$final_ids_file"; then
+            echo "::error::Final IDS score must include a numeric Score value, not pending."
+            exit 1
+          fi
+
+          if ! grep -Eiq '^Tier match:[[:space:]]*(yes|no)[[:space:]]*$' "$final_ids_file"; then
+            echo "::error::Final IDS score must include Tier match: yes or Tier match: no."
+            exit 1
+          fi
+
+          if ! grep -Eiq '^Rationale:[[:space:]]*[^[:space:]].*$' "$final_ids_file" || grep -Eiq '^Rationale:[[:space:]]*pending[[:space:]]*$' "$final_ids_file"; then
+            echo "::error::Final IDS score must include a non-pending one-sentence Rationale."
+            exit 1
+          fi
+
+          repo_owner="$(jq -r '.repository.owner.login' "$GITHUB_EVENT_PATH")"
+          repo_name="$(jq -r '.repository.name' "$GITHUB_EVENT_PATH")"
+          pr_number="$(jq -r '.pull_request.number' "$GITHUB_EVENT_PATH")"
+
+          gh api graphql \
+            -f owner="$repo_owner" \
+            -f repo="$repo_name" \
+            -F number="$pr_number" \
+            -f query='
+              query($owner:String!,$repo:String!,$number:Int!) {
+                repository(owner: $owner, name: $repo) {
+                  pullRequest(number: $number) {
+                    createdAt
+                    lastEditedAt
+                    commits(last: 1) {
+                      nodes {
+                        commit {
+                          committedDate
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ' > "$pr_metadata_file"
+
+          body_reviewed_at="$(jq -r '.data.repository.pullRequest.lastEditedAt // .data.repository.pullRequest.createdAt' "$pr_metadata_file")"
+          head_committed_at="$(jq -r '.data.repository.pullRequest.commits.nodes[0].commit.committedDate' "$pr_metadata_file")"
+
+          to_epoch() {
+            ISO_TIMESTAMP="$1" node -e '
+              const parsed = Date.parse(process.env.ISO_TIMESTAMP);
+              if (Number.isNaN(parsed)) {
+                process.exit(1);
+              }
+              console.log(Math.floor(parsed / 1000));
+            '
+          }
+
+          body_reviewed_epoch="$(to_epoch "$body_reviewed_at")"
+          head_committed_epoch="$(to_epoch "$head_committed_at")"
+
+          if [ "$body_reviewed_epoch" -lt "$head_committed_epoch" ]; then
+            echo "::error::PR body must be reviewed and updated after the latest head commit."
+            exit 1
+          fi
+
+          echo "PR body lint passed: required sections, IDS tier, final IDS score, boundary text, and freshness are valid."

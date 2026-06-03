@@ -18,6 +18,12 @@ Select exactly one per R-IDS-2:
 - [ ] Medium
 - [ ] Low
 
+## Final IDS score
+
+Score: pending
+Tier match: pending
+Rationale: pending
+
 ## Notes
 
 <!-- Optional public-safe context. No secrets, private context, or unrelated roadmap. -->
