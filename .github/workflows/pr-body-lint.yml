@@ -121,6 +121,7 @@ jobs:
                       nodes {
                         commit {
                           committedDate
+                          pushedDate
                         }
                       }
                     }
@@ -130,7 +131,17 @@ jobs:
             ' > "$pr_metadata_file"
 
           body_reviewed_at="$(jq -r '.data.repository.pullRequest.lastEditedAt // .data.repository.pullRequest.createdAt' "$pr_metadata_file")"
-          head_committed_at="$(jq -r '.data.repository.pullRequest.commits.nodes[0].commit.committedDate' "$pr_metadata_file")"
+          head_changed_at="$(jq -r '.data.repository.pullRequest.commits.nodes[0].commit.pushedDate // empty' "$pr_metadata_file")"
+          event_action="$(jq -r '.action' "$GITHUB_EVENT_PATH")"
+
+          if [ -z "$head_changed_at" ] && [ "$event_action" = "synchronize" ]; then
+            echo "::error::PR body must be reviewed and updated after the latest head push."
+            exit 1
+          fi
+
+          if [ -z "$head_changed_at" ]; then
+            head_changed_at="$(jq -r '.data.repository.pullRequest.commits.nodes[0].commit.committedDate' "$pr_metadata_file")"
+          fi
 
           to_epoch() {
             ISO_TIMESTAMP="$1" node -e '
@@ -143,10 +154,10 @@ jobs:
           }
 
           body_reviewed_epoch="$(to_epoch "$body_reviewed_at")"
-          head_committed_epoch="$(to_epoch "$head_committed_at")"
+          head_changed_epoch="$(to_epoch "$head_changed_at")"
 
-          if [ "$body_reviewed_epoch" -lt "$head_committed_epoch" ]; then
-            echo "::error::PR body must be reviewed and updated after the latest head commit."
+          if [ "$body_reviewed_epoch" -lt "$head_changed_epoch" ]; then
+            echo "::error::PR body must be reviewed and updated after the latest head push."
             exit 1
           fi
 
