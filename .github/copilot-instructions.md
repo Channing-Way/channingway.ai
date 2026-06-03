@@ -174,7 +174,9 @@ Tier ranges are non-overlapping; boundary values belong to the higher tier as wr
 
 This prevents low-density PRs from sneaking through as architecture-class and prevents high-density work from being fragmented across multiple low-class PRs. *(Origin: PR #84.)*
 
-The [`PR body lint`](workflows/pr-body-lint.yml) workflow enforces the R-IDS-2 declaration by requiring exactly one checked tier in the PR body before merge.
+**R-IDS-3 — every PR records a final IDS score before merge.** Final IDS scoring happens after the latest head commit is pushed and review-fix threads are resolved. Public IDS output in the PR body is limited to the final score, whether it matches the declared tier, and one sentence of rationale. Do not leave the final IDS score pending at merge time.
+
+The [`PR body lint`](workflows/pr-body-lint.yml) workflow enforces R-IDS-2 and R-IDS-3 by requiring exactly one checked tier, a non-pending final IDS score, a fresh PR body edited after the latest head push, and no first-name founder references in the PR body.
 
 ---
 
@@ -189,7 +191,7 @@ When making changes, verify the rules that apply to your diff:
 | OpenAPI / manifest / `_headers` | R-SCHEMA-1 |
 | any public copy | R-BOUNDARY-1 .. R-BOUNDARY-7, R-STYLE-1 |
 | external `<a>` tags on public HTML | R-EXTERNAL-1 |
-| any PR | R-IDS-1, R-IDS-2 |
+| any PR | R-IDS-1, R-IDS-2, R-IDS-3 |
 | repo files naming partners or stack | R-PARTNERS-1 |
 | POC receipts or public credential metadata | R-CREDENTIALS-1, R-PARTNERS-1, R-BOUNDARY-1 .. R-BOUNDARY-7, R-SCHEMA-1 |
 | Dockerfile, workflows, npm, model versions, `.nvmrc` | R-VERSIONING-1 |
@@ -206,10 +208,12 @@ Use [`.github/pull_request_template.md`](pull_request_template.md). PR title, br
 
 **Public PR comments stay bounded.** Review comments and PR replies should contain only decision-relevant review signal. Public IDS output should be limited to the final score, tier, one sentence of rationale, and whether the score matches the declared tier. Do not publish model rosters, ensemble tables, internal scoring machinery, prompt excerpts, raw model responses, tool invocation names, or meta-process traces unless the maintainer explicitly approves that public disclosure for the specific PR.
 
+**PR body freshness.** After any review-fix commit or pushed update, agents must re-open the live PR body and update or reaffirm Summary, Verification, Risk, IDS tier, Final IDS score, Notes, and Review gate before resolving review threads or handing the PR back. The PR body lint workflow fails if the live PR body has not been edited after the latest head push.
+
 **PR self-audit before posting.** Before submitting or updating a PR title, body, commit message, issue comment, review summary, or inline review comment, agents must self-audit for:
 - R-BOUNDARY-1 through R-BOUNDARY-7
 - R-COPY-1 through R-COPY-4
-- R-IDS-1 and R-IDS-2
+- R-IDS-1 through R-IDS-3
 - no internal forward-roadmap leaks, private process labels, private auth context, personal-history detail, legal context, raw secret values, or stale template text
 
 **Secrets in PR surfaces.** Agents may edit secret names, config references, workflow wiring, and documentation. Agents must not request, reveal, paste, store, screenshot, summarize, or commit raw secret values. Use provider secret stores and refer to secrets by name only.
