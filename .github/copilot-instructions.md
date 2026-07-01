@@ -82,22 +82,30 @@ Public substantive contributions on third-party surfaces (issues filed, PRs open
 
 ---
 
-## Versioning: always latest, never pin
+## Versioning: pin third-party, drift first-party
 
-**R-VERSIONING-1 — component versions are not pinned in this repository.** Use:
+**R-VERSIONING-1 — versioning strategy is scoped by dependency class, not applied uniformly.** The reproducibility axis differs for components this repository builds versus components it consumes from upstream; the rule follows that split.
 
-- `:latest` for container base images
-- `@latest` for npm packages installed at build time
-- `ubuntu-latest` for GitHub Actions runners
-- `@v<major>` for GitHub Actions (forward-drift within major)
-- `lts/*` for `.nvmrc` (forward-drifts across LTS majors)
-- Current frontier model versions, not stable-from-six-months-ago
+Pin third-party dependencies. Let dependabot manage drift:
 
-Reproducibility lives at the composed-image / SHA-tagged-artifact layer, not at the component-version layer. The `cw-build` container is tagged with the git SHA on every build; downstream workflows pull by SHA. Components inside the image forward-drift between rebuilds; the artifact-as-a-whole is reproducible by SHA tag.
+- **GitHub Actions** — pin to a 40-character commit SHA with the semver tag in a trailing comment (`uses: org/action@<sha>  # v<tag>`). Matches [GitHub's supply-chain hardening guidance](https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions) and defends against tag-swap attacks. Dependabot opens SHA bumps on release.
+- **npm build dependencies** — pin to an exact semver (`pkg@X.Y.Z`), not `@latest` or `@^X`. Applies to any package installed globally or from source during the build (for example, `wrangler` inside `Dockerfile`).
+- **Container base images** — pin to a specific slim tag (`node:22-slim`) at minimum; prefer a digest pin (`node:22-slim@sha256:...`) where the downstream will re-pull the image on every build. Never `:latest`.
 
-When reviewing, actively look for implicit version pinning anywhere in the repo (Dockerfile `FROM` tags, npm dependency pinning, action version pins beyond the major, OS image pins, model-version pins) and flag them so they can be moved back to leading-edge.
+Drift first-party surfaces and provider-managed environments:
 
-Exception: GitHub Actions major-version refs (`@v4`, `@v3`) are acceptable forward-drift since major-version bumps signal breaking changes. Do not pin actions to specific commit SHAs unless there is a documented supply-chain reason.
+- **The `cw-build` composed image itself** — tagged with the git SHA on every build; downstream workflows pull by SHA. Internal component drift between rebuilds is captured and made reproducible by the SHA-tagged artifact, not by pinning every component inside it.
+- **GitHub-hosted runners** — `ubuntu-latest`. GitHub manages runner image hardening centrally; over-pinning the runner suppresses that.
+- **`.nvmrc`** — `lts/*` (forward-drifts across LTS majors).
+- **Model versions** — current frontier versions, not stable-from-six-months-ago.
+
+When reviewing, actively look for both directions:
+
+- Third-party dependencies pinned to a floating reference (`@latest`, `:latest`, unbound tag, bare major like `@v4` on third-party actions, `@^X` on npm) — flag as a supply-chain / reproducibility risk. `@v<major>` on GitHub Actions is *not* an acceptable third-party pin under this rule; use commit SHA.
+- First-party or provider-managed surfaces over-pinned (`ubuntu-24.04` where `ubuntu-latest` is expected, hard-coded model versions in agent configs) — flag as unnecessary drift suppression that fights the provider's own hardening cadence.
+- Third-party pins with no drift mechanism behind them (a `wrangler@X.Y.Z` with no dependabot ecosystem entry, an unpinned action SHA no dependabot config touches) — flag as a maintenance liability; the pin is only load-bearing when there is an automated bump path behind it.
+
+*(Origin: PR #118. Supersedes the previous "always latest, never pin" formulation, which reflected an earlier velocity-first thesis. The current direction leans supply-chain hardening for third-party components; PR #116 (Dockerfile migration off Minimus, pinning wrangler) and the ongoing dependabot SHA-pinned action bumps are concrete instances of the new default.)*
 
 ---
 
