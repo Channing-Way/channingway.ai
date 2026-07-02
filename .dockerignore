@@ -1,4 +1,7 @@
-# The Dockerfile does not COPY anything from the build context.
-# Deny everything; allowlist only what the daemon needs.
+# The Dockerfile COPYs only npm manifest files (package.json,
+# package-lock.json) from the build context; everything else is denied.
+# Keep this allowlist tight; every entry expands attack surface / build size.
 *
 !Dockerfile
+!package.json
+!package-lock.json
