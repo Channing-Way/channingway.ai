@@ -4,6 +4,6 @@
   "private": true,
   "description": "Build-time npm dependencies for the cw-build container image. Tracked by Dependabot's npm ecosystem per R-VERSIONING-1. Not a runtime Node.js application.",
   "dependencies": {
-    "wrangler": "4.106.0"
+    "wrangler": "4.107.0"
   }
 }
