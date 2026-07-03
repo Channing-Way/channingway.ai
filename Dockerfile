@@ -10,7 +10,7 @@
 # Runs as the `node` user throughout. WORKDIR is under /home/node so the
 # workspace directory inherits node-user ownership; a root-owned WORKDIR
 # would cause EACCES when `npm ci` creates node_modules/ under it.
-FROM node:22-slim
+FROM node:26-slim
 
 LABEL org.opencontainers.image.source=https://github.com/Channing-Way/channingway.ai
 
