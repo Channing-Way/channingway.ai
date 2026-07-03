@@ -7,6 +7,8 @@ on:
       - 'Dockerfile'
       - '.github/workflows/image-build.yml'
       - '.dockerignore'
+      - 'package.json'
+      - 'package-lock.json'
   workflow_dispatch:
 
 permissions:
@@ -28,10 +30,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
-      - name: Login to Minimus registry
-        run: |
-          echo "${{ secrets.MINIMUS_TENANT_ID }}" | docker login reg.mini.dev -u minimus --password-stdin
-
       - name: Login to GHCR
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -39,7 +37,6 @@ jobs:
       - name: Build cw-build image
         run: |
           docker build --pull \
-            --build-arg MINIMUS_TENANT_ID="${{ secrets.MINIMUS_TENANT_ID }}" \
             -t ${{ env.IMAGE_NAME }}:latest \
             -t "${{ env.IMAGE_NAME }}:${{ github.sha }}" \
             .
